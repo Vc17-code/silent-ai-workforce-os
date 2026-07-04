@@ -3,9 +3,10 @@ import { useState, useCallback } from 'react';
 interface FileUploadProps {
   onUpload: (file: File) => void;
   loading?: boolean;
+  disabled?: boolean;
 }
 
-export default function FileUpload({ onUpload, loading }: FileUploadProps) {
+export default function FileUpload({ onUpload, loading, disabled }: FileUploadProps) {
   const [dragOver, setDragOver] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
 
@@ -35,21 +36,24 @@ export default function FileUpload({ onUpload, loading }: FileUploadProps) {
   return (
     <div
       onDragOver={(e) => {
+        if (disabled) return;
         e.preventDefault();
         setDragOver(true);
       }}
       onDragLeave={() => setDragOver(false)}
       onDrop={onDrop}
-      className={`glass-card border-2 border-dashed transition-all duration-300 cursor-pointer ${
-        dragOver ? 'border-indigo-400/60 bg-indigo-500/10 scale-[1.01]' : 'border-white/20 hover:border-white/30'
+      className={`glass-card border-2 border-dashed transition-all duration-300 ${
+        disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+      } ${
+        dragOver && !disabled ? 'border-indigo-400/60 bg-indigo-500/10 scale-[1.01]' : 'border-white/20 hover:border-white/30'
       } ${loading ? 'opacity-60 pointer-events-none' : ''}`}
     >
-      <label className="flex flex-col items-center py-10 px-6 cursor-pointer">
+      <label className={`flex flex-col items-center py-10 px-6 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
         <input
           type="file"
           accept=".csv,.xlsx,.xls"
           className="hidden"
-          disabled={loading}
+          disabled={loading || disabled}
           onChange={(e) => {
             const file = e.target.files?.[0];
             if (file) handleFile(file);
@@ -67,7 +71,7 @@ export default function FileUpload({ onUpload, loading }: FileUploadProps) {
         </div>
 
         <p className="text-base sm:text-lg font-medium text-white mb-1">
-          {loading ? 'Analyzing your data...' : (
+          {disabled ? 'Demo limit reached' : loading ? 'Analyzing your data...' : (
             <>
               <span className="sm:hidden">Tap to upload your file</span>
               <span className="hidden sm:inline">Drag & drop your file here</span>

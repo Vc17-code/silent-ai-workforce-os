@@ -38,6 +38,20 @@ Open [http://localhost:5173](http://localhost:5173) and sign in with:
 - **Email:** demo@business.com
 - **Password:** demo1234
 
+Demo accounts are limited to **3 new reports per device IP**. A premium showcase report is pre-loaded to preview the full experience.
+
+### Registration & access keys
+
+Registration requires a one-time access key. Generate keys for customers:
+
+```bash
+npm run generate-key --prefix server
+# With an optional note:
+npm run generate-key --prefix server -- "Acme Corp - March 2026"
+```
+
+Each key can only be used once. Share it with the customer when they request access.
+
 ### Mobile access
 
 **On your local machine (same Wi‑Fi):** run `npm run dev` and open the **Network** URL from Vite (e.g. `http://192.168.x.x:5173`) on your phone.

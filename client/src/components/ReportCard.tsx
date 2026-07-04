@@ -17,8 +17,14 @@ function formatDate(dateStr: string) {
 }
 
 export default function ReportCard({ report, onDelete }: ReportCardProps) {
+  const isShowcase = Boolean(report.is_showcase);
+
   return (
-    <div className="glass-card group animate-slide-up">
+    <div
+      className={`glass-card group animate-slide-up ${
+        isShowcase ? 'ring-1 ring-amber-400/40 bg-gradient-to-br from-amber-500/5 to-indigo-500/5' : ''
+      }`}
+    >
       <div className="flex items-start justify-between gap-4">
         <Link to={`/report/${report.id}`} className="flex-1 min-w-0">
           <div className="flex items-center gap-3 mb-3">
@@ -28,9 +34,16 @@ export default function ReportCard({ report, onDelete }: ReportCardProps) {
               </svg>
             </div>
             <div className="min-w-0">
-              <h3 className="font-semibold text-white truncate group-hover:text-indigo-300 transition-colors">
-                {report.title}
-              </h3>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="font-semibold text-white truncate group-hover:text-indigo-300 transition-colors">
+                  {report.title}
+                </h3>
+                {isShowcase && (
+                  <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wide bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                    Premium
+                  </span>
+                )}
+              </div>
               <p className="text-xs text-slate-400">{report.filename}</p>
             </div>
           </div>

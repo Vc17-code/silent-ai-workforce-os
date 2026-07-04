@@ -2,6 +2,13 @@ export interface User {
   id: number;
   email: string;
   name: string;
+  accountType: 'demo' | 'registered';
+}
+
+export interface DemoUsage {
+  used: number;
+  limit: number;
+  remaining: number;
 }
 
 export interface KeyNumber {
@@ -35,6 +42,7 @@ export interface ReportSummary {
   row_count: number;
   created_at: string;
   summary_preview?: string;
+  is_showcase?: number;
 }
 
 export interface ReportDetail {
@@ -46,6 +54,7 @@ export interface ReportDetail {
   data: Record<string, string | number>[];
   analysis: Analysis;
   createdAt: string;
+  isShowcase?: boolean;
 }
 
 const API_BASE = '/api';
@@ -80,16 +89,18 @@ async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
 
 export const api = {
   login: (email: string, password: string) =>
-    request<{ token: string; user: User }>('/auth/login', {
+    request<{ token: string; user: User; demoUsage?: DemoUsage }>('/auth/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     }),
 
-  register: (email: string, password: string, name: string) =>
+  register: (email: string, password: string, name: string, accessKey: string) =>
     request<{ token: string; user: User }>('/auth/register', {
       method: 'POST',
-      body: JSON.stringify({ email, password, name }),
+      body: JSON.stringify({ email, password, name, accessKey }),
     }),
+
+  getMe: () => request<{ user: User; demoUsage?: DemoUsage }>('/auth/me'),
 
   getReports: () => request<ReportSummary[]>('/reports'),
 
@@ -99,20 +110,19 @@ export const api = {
     const form = new FormData();
     form.append('file', file);
     if (title) form.append('title', title);
-    return request<{ id: number; title: string; analysis: Analysis }>('/reports/upload', {
-      method: 'POST',
-      body: form,
-      headers: {},
-    });
+    return request<{ id: number; title: string; analysis: Analysis; demoUsage?: DemoUsage }>(
+      '/reports/upload',
+      { method: 'POST', body: form, headers: {} }
+    );
   },
 
   generateSample: () =>
-    request<{ id: number; title: string; analysis: Analysis }>('/reports/sample/generate', {
-      method: 'POST',
-    }),
+    request<{ id: number; title: string; analysis: Analysis; demoUsage?: DemoUsage }>(
+      '/reports/sample/generate',
+      { method: 'POST' }
+    ),
 
-  deleteReport: (id: number) =>
-    request<{ success: boolean }>(`/reports/${id}`, { method: 'DELETE' }),
+  deleteReport: (id: number) => request<{ success: boolean }>(`/reports/${id}`, { method: 'DELETE' }),
 
   downloadReport: async (id: number, format: 'pdf' | 'docx' | 'html') => {
     const token = getToken();

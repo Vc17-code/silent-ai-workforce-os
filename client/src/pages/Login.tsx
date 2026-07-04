@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -8,8 +8,16 @@ export default function Login() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [accessKey, setAccessKey] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('openRegister')) {
+      setIsRegister(true);
+      sessionStorage.removeItem('openRegister');
+    }
+  }, []);
 
   if (user) return <Navigate to="/" replace />;
 
@@ -19,7 +27,7 @@ export default function Login() {
     setLoading(true);
     try {
       if (isRegister) {
-        await register(name, email, password);
+        await register(name, email, password, accessKey);
       } else {
         await login(email, password);
       }
@@ -31,9 +39,11 @@ export default function Login() {
   };
 
   const fillDemo = () => {
+    setIsRegister(false);
     setEmail('demo@business.com');
     setPassword('demo1234');
     setName('Alex Morgan');
+    setAccessKey('');
   };
 
   return (
@@ -74,19 +84,38 @@ export default function Login() {
             </button>
           </div>
 
+          {isRegister && (
+            <div className="mb-4 p-3 rounded-xl bg-amber-500/10 border border-amber-400/20 text-amber-200/90 text-xs sm:text-sm">
+              Registration requires a one-time access key. Request yours to unlock unlimited reports.
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             {isRegister && (
-              <div>
-                <label className="block text-sm text-slate-300 mb-1.5">Full Name</label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="input-field"
-                  placeholder="Alex Morgan"
-                  required
-                />
-              </div>
+              <>
+                <div>
+                  <label className="block text-sm text-slate-300 mb-1.5">Access Key</label>
+                  <input
+                    type="text"
+                    value={accessKey}
+                    onChange={(e) => setAccessKey(e.target.value)}
+                    className="input-field font-mono tracking-wider uppercase"
+                    placeholder="AIRG-XXXX-XXXX-XXXX"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-slate-300 mb-1.5">Full Name</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="input-field"
+                    placeholder="Alex Morgan"
+                    required
+                  />
+                </div>
+              </>
             )}
 
             <div>
@@ -134,7 +163,7 @@ export default function Login() {
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
-              Use demo account
+              Try demo (3 reports per device)
             </button>
             <p className="text-center text-xs text-slate-500 mt-3">demo@business.com / demo1234</p>
           </div>

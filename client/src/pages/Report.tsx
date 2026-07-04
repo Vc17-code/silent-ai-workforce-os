@@ -73,6 +73,24 @@ export default function Report() {
 
   return (
     <div className="space-y-8 animate-fade-in">
+      {report.isShowcase && (
+        <div className="rounded-2xl p-4 sm:p-5 bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-indigo-500/15 border border-amber-400/25">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/20">
+              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
+            </div>
+            <div>
+              <p className="font-semibold text-amber-200">Premium Showcase Report</p>
+              <p className="text-sm text-slate-400">
+                This is the best-in-class report outlook available with a full account.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
           <Link to="/" className="text-sm text-slate-400 hover:text-white transition-colors mb-2 inline-flex items-center gap-1">
@@ -108,7 +126,7 @@ export default function Report() {
         </div>
       </div>
 
-      <section className="glass-card animate-slide-up">
+      <section className={`glass-card animate-slide-up ${report.isShowcase ? 'ring-1 ring-amber-400/20' : ''}`}>
         <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
           <svg className="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -127,7 +145,10 @@ export default function Report() {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {analysis.keyNumbers.map((kn, i) => (
-            <div key={i} className="glass-card text-center">
+            <div
+              key={i}
+              className={`glass-card text-center ${report.isShowcase ? 'bg-gradient-to-b from-amber-500/5 to-transparent' : ''}`}
+            >
               <p className="text-xs text-slate-400 mb-2">{kn.label}</p>
               <p className="text-2xl font-bold text-white mb-1">{kn.value}</p>
               {kn.change && (
