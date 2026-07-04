@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "dev:mobile": "concurrently -n api,web,tunnel -c blue,green,magenta \"npm run dev --prefix server\" \"npm run dev --prefix client\" \"bash scripts/start-mobile-tunnel.sh\"",
     "install:all": "npm install --prefix server && npm install --prefix client",
     "build": "npm run build --prefix client && npm run build --prefix server",
     "start": "npm run start --prefix server"

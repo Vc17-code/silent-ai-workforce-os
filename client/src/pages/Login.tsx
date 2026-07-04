@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -8,8 +8,16 @@ export default function Login() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [accessKey, setAccessKey] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('openRegister')) {
+      setIsRegister(true);
+      sessionStorage.removeItem('openRegister');
+    }
+  }, []);
 
   if (user) return <Navigate to="/" replace />;
 
@@ -19,7 +27,7 @@ export default function Login() {
     setLoading(true);
     try {
       if (isRegister) {
-        await register(name, email, password);
+        await register(name, email, password, accessKey);
       } else {
         await login(email, password);
       }
@@ -31,13 +39,15 @@ export default function Login() {
   };
 
   const fillDemo = () => {
+    setIsRegister(false);
     setEmail('demo@business.com');
     setPassword('demo1234');
     setName('Alex Morgan');
+    setAccessKey('');
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative px-4">
+    <div className="min-h-screen min-h-[100dvh] flex items-center justify-center relative px-4 py-8 pt-[calc(2rem+env(safe-area-inset-top))] pb-[calc(2rem+env(safe-area-inset-bottom))]">
       <div className="bg-orb w-96 h-96 bg-indigo-600/25 -top-48 -left-48 animate-float" />
       <div className="bg-orb w-80 h-80 bg-purple-600/20 bottom-0 -right-40 animate-float" style={{ animationDelay: '3s' }} />
 
@@ -48,7 +58,7 @@ export default function Login() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">AI Report Generator</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">AI Report Generator</h1>
           <p className="text-slate-400">Transform your data into professional business reports</p>
         </div>
 
@@ -74,19 +84,38 @@ export default function Login() {
             </button>
           </div>
 
+          {isRegister && (
+            <div className="mb-4 p-3 rounded-xl bg-amber-500/10 border border-amber-400/20 text-amber-200/90 text-xs sm:text-sm">
+              Registration requires a one-time access key. Request yours to unlock unlimited reports.
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             {isRegister && (
-              <div>
-                <label className="block text-sm text-slate-300 mb-1.5">Full Name</label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="input-field"
-                  placeholder="Alex Morgan"
-                  required
-                />
-              </div>
+              <>
+                <div>
+                  <label className="block text-sm text-slate-300 mb-1.5">Access Key</label>
+                  <input
+                    type="text"
+                    value={accessKey}
+                    onChange={(e) => setAccessKey(e.target.value)}
+                    className="input-field font-mono tracking-wider uppercase"
+                    placeholder="AIRG-XXXX-XXXX-XXXX"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-slate-300 mb-1.5">Full Name</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="input-field"
+                    placeholder="Alex Morgan"
+                    required
+                  />
+                </div>
+              </>
             )}
 
             <div>
@@ -134,7 +163,7 @@ export default function Login() {
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
-              Use demo account
+              Try demo (3 reports per device)
             </button>
             <p className="text-center text-xs text-slate-500 mt-3">demo@business.com / demo1234</p>
           </div>

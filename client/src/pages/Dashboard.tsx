@@ -4,15 +4,18 @@ import { api, ReportSummary } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import FileUpload from '../components/FileUpload';
 import ReportCard from '../components/ReportCard';
+import DemoBanner from '../components/DemoBanner';
 
 export default function Dashboard() {
-  const { user } = useAuth();
+  const { user, isDemo, demoUsage, refreshDemoUsage } = useAuth();
   const navigate = useNavigate();
   const [reports, setReports] = useState<ReportSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState('');
+
+  const demoLimitReached = isDemo && demoUsage?.remaining === 0;
 
   const fetchReports = useCallback(async () => {
     try {
@@ -27,29 +30,36 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchReports();
-  }, [fetchReports]);
+    refreshDemoUsage();
+  }, [fetchReports, refreshDemoUsage]);
 
   const handleUpload = async (file: File) => {
+    if (demoLimitReached) return;
     setUploading(true);
     setError('');
     try {
       const result = await api.uploadReport(file);
+      await refreshDemoUsage();
       navigate(`/report/${result.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Upload failed');
       setUploading(false);
+      await refreshDemoUsage();
     }
   };
 
   const handleSample = async () => {
+    if (demoLimitReached) return;
     setGenerating(true);
     setError('');
     try {
       const result = await api.generateSample();
+      await refreshDemoUsage();
       navigate(`/report/${result.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Sample generation failed');
       setGenerating(false);
+      await refreshDemoUsage();
     }
   };
 
@@ -57,23 +67,33 @@ export default function Dashboard() {
     try {
       await api.deleteReport(id);
       setReports((prev) => prev.filter((r) => r.id !== id));
-    } catch {
-      setError('Failed to delete report');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to delete report');
     }
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-6 sm:space-y-8 animate-fade-in">
+      <DemoBanner />
+
       <div>
-        <h1 className="text-3xl font-bold text-white mb-2">
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Welcome back, {user?.name?.split(' ')[0]}
         </h1>
-        <p className="text-slate-400">Upload your business data and get AI-powered insights in seconds.</p>
+        <p className="text-sm sm:text-base text-slate-400">
+          {isDemo
+            ? 'Explore the premium showcase report, then try up to 3 reports on this device.'
+            : 'Upload your business data and get AI-powered insights in seconds.'}
+        </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
-          { label: 'Reports Generated', value: reports.length, icon: '📊' },
+          {
+            label: 'Reports Generated',
+            value: isDemo && demoUsage ? `${demoUsage.used}/${demoUsage.limit}` : reports.length,
+            icon: '📊',
+          },
           { label: 'Supported Formats', value: 'CSV, XLSX', icon: '📁' },
           { label: 'Export Options', value: 'PDF, Word, HTML', icon: '📥' },
         ].map((stat) => (
@@ -89,12 +109,12 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         <div className="lg:col-span-3 space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <h2 className="text-lg font-semibold text-white">Upload Data</h2>
             <button
               onClick={handleSample}
-              disabled={generating || uploading}
-              className="btn-secondary text-sm flex items-center gap-2"
+              disabled={generating || uploading || demoLimitReached}
+              className="btn-secondary text-sm flex items-center justify-center gap-2 w-full sm:w-auto disabled:opacity-50"
             >
               {generating ? (
                 <div className="w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
@@ -106,7 +126,7 @@ export default function Dashboard() {
               Try sample dataset
             </button>
           </div>
-          <FileUpload onUpload={handleUpload} loading={uploading} />
+          <FileUpload onUpload={handleUpload} loading={uploading} disabled={demoLimitReached} />
         </div>
 
         <div className="lg:col-span-2 glass-card">
@@ -136,7 +156,9 @@ export default function Dashboard() {
       )}
 
       <section>
-        <h2 className="text-lg font-semibold text-white mb-4">Recent Reports</h2>
+        <h2 className="text-lg font-semibold text-white mb-4">
+          {isDemo ? 'Showcase & Recent Reports' : 'Recent Reports'}
+        </h2>
         {loading ? (
           <div className="flex justify-center py-12">
             <div className="w-8 h-8 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
@@ -152,7 +174,11 @@ export default function Dashboard() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {reports.map((report) => (
-              <ReportCard key={report.id} report={report} onDelete={handleDelete} />
+              <ReportCard
+                key={report.id}
+                report={report}
+                onDelete={isDemo && report.is_showcase ? undefined : handleDelete}
+              />
             ))}
           </div>
         )}
