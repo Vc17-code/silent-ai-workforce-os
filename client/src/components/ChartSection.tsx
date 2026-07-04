@@ -41,8 +41,8 @@ const doughnutOptions = {
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      position: 'right' as const,
-      labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 }, padding: 12 },
+      position: 'bottom' as const,
+      labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 }, padding: 12, boxWidth: 12 },
     },
   },
 };
@@ -86,7 +86,7 @@ export default function ChartSection({ charts }: ChartSectionProps) {
         {charts.map((chart, i) => (
           <div key={i} className="glass-card">
             <h3 className="text-sm font-medium text-slate-300 mb-4">{chart.title}</h3>
-            <div className="h-64">{renderChart(chart)}</div>
+            <div className="h-56 sm:h-64">{renderChart(chart)}</div>
           </div>
         ))}
       </div>

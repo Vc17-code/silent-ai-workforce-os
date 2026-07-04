@@ -30,6 +30,6 @@ if (fs.existsSync(clientDist)) {
   });
 }
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`AI Report Generator API running on http://localhost:${PORT}`);
 });

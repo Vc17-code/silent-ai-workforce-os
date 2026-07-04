@@ -66,10 +66,18 @@ export default function FileUpload({ onUpload, loading }: FileUploadProps) {
           )}
         </div>
 
-        <p className="text-lg font-medium text-white mb-1">
-          {loading ? 'Analyzing your data...' : 'Drag & drop your file here'}
+        <p className="text-base sm:text-lg font-medium text-white mb-1">
+          {loading ? 'Analyzing your data...' : (
+            <>
+              <span className="sm:hidden">Tap to upload your file</span>
+              <span className="hidden sm:inline">Drag & drop your file here</span>
+            </>
+          )}
         </p>
-        <p className="text-sm text-slate-400 mb-4">or click to browse</p>
+        <p className="text-sm text-slate-400 mb-4">
+          <span className="sm:hidden">Choose a CSV or Excel file</span>
+          <span className="hidden sm:inline">or click to browse</span>
+        </p>
 
         <div className="flex gap-2">
           <span className="px-3 py-1 rounded-lg bg-white/10 text-xs text-slate-300">CSV</span>

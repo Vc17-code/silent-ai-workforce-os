@@ -56,7 +56,7 @@ export default function ReportCard({ report, onDelete }: ReportCardProps) {
               e.preventDefault();
               if (confirm('Delete this report?')) onDelete(report.id);
             }}
-            className="p-2 rounded-lg text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors opacity-0 group-hover:opacity-100"
+            className="p-2 rounded-lg text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
             title="Delete report"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

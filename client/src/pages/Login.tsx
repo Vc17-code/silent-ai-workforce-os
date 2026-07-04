@@ -37,7 +37,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative px-4">
+    <div className="min-h-screen min-h-[100dvh] flex items-center justify-center relative px-4 py-8 pt-[calc(2rem+env(safe-area-inset-top))] pb-[calc(2rem+env(safe-area-inset-bottom))]">
       <div className="bg-orb w-96 h-96 bg-indigo-600/25 -top-48 -left-48 animate-float" />
       <div className="bg-orb w-80 h-80 bg-purple-600/20 bottom-0 -right-40 animate-float" style={{ animationDelay: '3s' }} />
 
@@ -48,7 +48,7 @@ export default function Login() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">AI Report Generator</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">AI Report Generator</h1>
           <p className="text-slate-400">Transform your data into professional business reports</p>
         </div>
 

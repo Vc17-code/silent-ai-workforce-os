@@ -63,12 +63,12 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-6 sm:space-y-8 animate-fade-in">
       <div>
-        <h1 className="text-3xl font-bold text-white mb-2">
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Welcome back, {user?.name?.split(' ')[0]}
         </h1>
-        <p className="text-slate-400">Upload your business data and get AI-powered insights in seconds.</p>
+        <p className="text-sm sm:text-base text-slate-400">Upload your business data and get AI-powered insights in seconds.</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -89,12 +89,12 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         <div className="lg:col-span-3 space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <h2 className="text-lg font-semibold text-white">Upload Data</h2>
             <button
               onClick={handleSample}
               disabled={generating || uploading}
-              className="btn-secondary text-sm flex items-center gap-2"
+              className="btn-secondary text-sm flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               {generating ? (
                 <div className="w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />

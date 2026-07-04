@@ -38,6 +38,10 @@ Open [http://localhost:5173](http://localhost:5173) and sign in with:
 - **Email:** demo@business.com
 - **Password:** demo1234
 
+### Mobile / LAN access
+
+Dev servers bind to all network interfaces. On the same Wi‑Fi, open the **Network** URL printed by Vite (e.g. `http://192.168.x.x:5173`) on your phone or tablet. API requests are proxied through Vite, so no extra client config is needed.
+
 ## Project Structure
 
 ```
