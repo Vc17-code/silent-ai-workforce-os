@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', service: 'AI Report Generator' });
+  res.json({ status: 'ok', service: 'ReportAI' });
 });
 
 app.use('/api/auth', authRoutes);
@@ -32,6 +32,10 @@ if (fs.existsSync(clientDist)) {
   });
 }
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`AI Report Generator API running on http://localhost:${PORT}`);
-});
+export default app;
+
+if (!process.env.VERCEL) {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`ReportAI API running on http://localhost:${PORT}`);
+  });
+}
