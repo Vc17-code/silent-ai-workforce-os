@@ -1,28 +1,19 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { api, ReportSummary } from '../api/client';
 import { useAuth } from '../context/AuthContext';
-import FileUpload from '../components/FileUpload';
 import ReportCard from '../components/ReportCard';
 import DemoBanner from '../components/DemoBanner';
 
 export default function Dashboard() {
-  const { user, isDemo, demoUsage, refreshDemoUsage } = useAuth();
+  const { user, isDemo, subscription } = useAuth();
   const navigate = useNavigate();
   const [reports, setReports] = useState<ReportSummary[]>([]);
   const [loading, setLoading] = useState(true);
-  const [uploading, setUploading] = useState(false);
-  const [generating, setGenerating] = useState(false);
-  const [error, setError] = useState('');
-
-  const demoLimitReached = isDemo && demoUsage?.remaining === 0;
 
   const fetchReports = useCallback(async () => {
     try {
-      const data = await api.getReports();
-      setReports(data);
-    } catch {
-      setError('Failed to load reports');
+      setReports(await api.getReports());
     } finally {
       setLoading(false);
     }
@@ -30,149 +21,68 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchReports();
-    refreshDemoUsage();
-  }, [fetchReports, refreshDemoUsage]);
-
-  const handleUpload = async (file: File) => {
-    if (demoLimitReached) return;
-    setUploading(true);
-    setError('');
-    try {
-      const result = await api.uploadReport(file);
-      await refreshDemoUsage();
-      navigate(`/report/${result.id}`);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Upload failed');
-      setUploading(false);
-      await refreshDemoUsage();
-    }
-  };
-
-  const handleSample = async () => {
-    if (demoLimitReached) return;
-    setGenerating(true);
-    setError('');
-    try {
-      const result = await api.generateSample();
-      await refreshDemoUsage();
-      navigate(`/report/${result.id}`);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Sample generation failed');
-      setGenerating(false);
-      await refreshDemoUsage();
-    }
-  };
+  }, [fetchReports]);
 
   const handleDelete = async (id: number) => {
     try {
       await api.deleteReport(id);
       setReports((prev) => prev.filter((r) => r.id !== id));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to delete report');
+    } catch {
+      /* ignore */
     }
   };
 
   return (
-    <div className="space-y-6 sm:space-y-8 animate-fade-in">
-      <DemoBanner />
-
+    <div className="space-y-5 animate-fade-in">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-          Welcome back, {user?.name?.split(' ')[0]}
-        </h1>
-        <p className="text-sm sm:text-base text-slate-400">
-          {isDemo
-            ? 'Explore the premium showcase report, then try up to 3 reports on this device.'
-            : 'Upload your business data and get AI-powered insights in seconds.'}
+        <h1 className="text-xl font-bold text-white">Hi, {user?.name?.split(' ')[0]}</h1>
+        <p className="text-sm text-slate-400 mt-1">
+          {isDemo ? 'Explore the premium showcase below' : 'Your AI-powered report studio'}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {[
-          {
-            label: 'Reports Generated',
-            value: isDemo && demoUsage ? `${demoUsage.used}/${demoUsage.limit}` : reports.length,
-            icon: '📊',
-          },
-          { label: 'Supported Formats', value: 'CSV, XLSX', icon: '📁' },
-          { label: 'Export Options', value: 'PDF, Word, HTML', icon: '📥' },
-        ].map((stat) => (
-          <div key={stat.label} className="glass-card flex items-center gap-4">
-            <span className="text-2xl">{stat.icon}</span>
-            <div>
-              <p className="text-2xl font-bold text-white">{stat.value}</p>
-              <p className="text-xs text-slate-400">{stat.label}</p>
-            </div>
+      <DemoBanner />
+
+      <div className="grid grid-cols-2 gap-3">
+        <Link to="/upload" className="glass-card p-4 flex flex-col gap-2 hover:bg-white/[0.08] transition-colors">
+          <div className="w-9 h-9 rounded-xl bg-indigo-500/20 flex items-center justify-center">
+            <svg className="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
           </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-        <div className="lg:col-span-3 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <h2 className="text-lg font-semibold text-white">Upload Data</h2>
-            <button
-              onClick={handleSample}
-              disabled={generating || uploading || demoLimitReached}
-              className="btn-secondary text-sm flex items-center justify-center gap-2 w-full sm:w-auto disabled:opacity-50"
-            >
-              {generating ? (
-                <div className="w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
-              ) : (
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                </svg>
-              )}
-              Try sample dataset
-            </button>
+          <span className="text-sm font-medium text-white">New report</span>
+          <span className="text-xs text-slate-500">
+            {subscription?.reportsRemaining ?? '∞'} left
+          </span>
+        </Link>
+        <Link to="/plans" className="glass-card p-4 flex flex-col gap-2 hover:bg-white/[0.08] transition-colors">
+          <div className="w-9 h-9 rounded-xl bg-amber-500/20 flex items-center justify-center">
+            <svg className="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
           </div>
-          <FileUpload onUpload={handleUpload} loading={uploading} disabled={demoLimitReached} />
-        </div>
-
-        <div className="lg:col-span-2 glass-card">
-          <h3 className="text-sm font-semibold text-white mb-4">How it works</h3>
-          <ol className="space-y-4">
-            {[
-              { step: '1', text: 'Upload your CSV or Excel file with business data' },
-              { step: '2', text: 'AI analyzes patterns, trends, and key metrics' },
-              { step: '3', text: 'Review insights, charts, and recommendations' },
-              { step: '4', text: 'Download as PDF, Word, or HTML' },
-            ].map((item) => (
-              <li key={item.step} className="flex gap-3">
-                <span className="w-7 h-7 rounded-lg bg-indigo-500/20 text-indigo-300 text-sm font-semibold flex items-center justify-center flex-shrink-0">
-                  {item.step}
-                </span>
-                <span className="text-sm text-slate-300 pt-0.5">{item.text}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
+          <span className="text-sm font-medium text-white">Upgrade</span>
+          <span className="text-xs text-slate-500">{subscription?.planName ?? 'View plans'}</span>
+        </Link>
       </div>
-
-      {error && (
-        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 text-sm">
-          {error}
-        </div>
-      )}
 
       <section>
-        <h2 className="text-lg font-semibold text-white mb-4">
-          {isDemo ? 'Showcase & Recent Reports' : 'Recent Reports'}
+        <h2 className="text-sm font-semibold text-white mb-3">
+          {isDemo ? 'Showcase & Reports' : 'Recent Reports'}
         </h2>
         {loading ? (
-          <div className="flex justify-center py-12">
-            <div className="w-8 h-8 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+          <div className="flex justify-center py-10">
+            <div className="w-7 h-7 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
           </div>
         ) : reports.length === 0 ? (
-          <div className="glass-card text-center py-12">
-            <svg className="w-12 h-12 text-slate-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            <p className="text-slate-400 mb-2">No reports yet</p>
-            <p className="text-sm text-slate-500">Upload a file or try the sample dataset to get started</p>
+          <div className="glass-card text-center py-10">
+            <p className="text-slate-400 text-sm mb-3">No reports yet</p>
+            <button onClick={() => navigate('/upload')} className="btn-primary text-sm py-2 px-4">
+              Upload data
+            </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-3">
             {reports.map((report) => (
               <ReportCard
                 key={report.id}

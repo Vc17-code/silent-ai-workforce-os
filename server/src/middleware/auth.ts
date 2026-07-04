@@ -9,9 +9,15 @@ export interface AuthRequest extends Request {
   user?: User;
 }
 
-export function signToken(user: Pick<User, 'id' | 'email' | 'name' | 'account_type'>): string {
+export function signToken(user: Pick<User, 'id' | 'email' | 'name' | 'account_type' | 'subscription_tier'>): string {
   return jwt.sign(
-    { id: user.id, email: user.email, name: user.name, accountType: user.account_type },
+    {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      accountType: user.account_type,
+      subscriptionTier: user.subscription_tier,
+    },
     JWT_SECRET,
     { expiresIn: '7d' }
   );
@@ -26,7 +32,7 @@ export function authMiddleware(req: AuthRequest, res: Response, next: NextFuncti
   try {
     const payload = jwt.verify(header.slice(7), JWT_SECRET) as { id: number };
     const user = db
-      .prepare('SELECT id, email, name, account_type, created_at FROM users WHERE id = ?')
+      .prepare('SELECT id, email, name, account_type, subscription_tier, subscription_expires_at, reports_this_month, reports_month_reset, created_at FROM users WHERE id = ?')
       .get(payload.id) as User | undefined;
     if (!user) {
       return res.status(401).json({ error: 'User not found' });

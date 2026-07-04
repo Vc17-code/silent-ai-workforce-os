@@ -1,95 +1,77 @@
-# AI Report Generator
+# ReportAI — Business Report Micro App
 
-A modern web application that transforms Excel and CSV business data into professional AI-powered reports with insights, charts, and multi-format exports.
+A mobile-first micro app that transforms business data into AI-powered reports with subscription tiers, multi-format uploads, and WhatsApp passkey requests.
 
 ## Features
 
-- **Dashboard** — Drag-and-drop upload, sample dataset, recent reports
-- **File Support** — CSV and XLSX uploads
-- **AI Analysis** — Executive summary, key numbers, business insights, growth opportunities, risks, and recommendations
-- **Visual Charts** — Interactive bar, line, and doughnut charts via Chart.js
-- **Export** — Download reports as PDF, Word (.docx), or HTML
-- **Authentication** — Simple login with local SQLite database
-- **Design** — Glassmorphism UI, responsive, premium minimal aesthetic
+- **Micro-app UI** — Bottom navigation (Home, Upload, Plans, Account), PWA-ready
+- **Multi-format uploads** — CSV, Excel, TSV, JSON, XML, ODS, TXT (by plan)
+- **Subscription tiers** — Starter, Pro, Business with monthly limits
+- **Passkey registration** — One-time keys for new accounts
+- **Demo mode** — 3 reports per device IP + premium showcase
+- **WhatsApp contact** — Clients request passkeys at **+61 432 751 093**
+- **Exports** — PDF, Word, HTML (by plan)
 
-## Tech Stack
+## Subscription Plans
 
-| Layer    | Technologies                          |
-|----------|---------------------------------------|
-| Frontend | React, TypeScript, Tailwind CSS, Chart.js |
-| Backend  | Node.js, Express, TypeScript          |
-| Database | SQLite (better-sqlite3)               |
+| Plan     | Reports/month | Upload formats                          | Exports        |
+|----------|---------------|-----------------------------------------|----------------|
+| Demo     | 3 per IP      | CSV, Excel                              | HTML           |
+| Starter  | 20            | CSV, Excel, TSV                         | HTML           |
+| Pro      | 100           | All formats                             | PDF, Word, HTML|
+| Business | Unlimited     | All formats                             | PDF, Word, HTML|
 
 ## Quick Start
 
 ```bash
-# Install dependencies
 npm run install:all
-
-# Seed demo data
 npm run seed --prefix server
-
-# Start development servers (API on :3001, UI on :5173)
-npm run dev
+npm run dev          # local
+npm run dev:mobile   # with public tunnel for phones
 ```
 
-Open [http://localhost:5173](http://localhost:5173) and sign in with:
+**Demo login:** demo@business.com / demo1234
 
-- **Email:** demo@business.com
-- **Password:** demo1234
+## Passkeys & subscriptions
 
-Demo accounts are limited to **3 new reports per device IP**. A premium showcase report is pre-loaded to preview the full experience.
+**Clients:** Request a passkey on WhatsApp: [+61 432 751 093](https://wa.me/61432751093)
 
-### Registration & access keys
-
-Registration requires a one-time access key. Generate keys for customers:
-
+**Admin — registration passkey:**
 ```bash
-npm run generate-key --prefix server
-# With an optional note:
-npm run generate-key --prefix server -- "Acme Corp - March 2026"
+npm run generate-key --prefix server -- "Customer Name"
 ```
 
-Each key can only be used once. Share it with the customer when they request access.
+**Admin — subscription upgrade key:**
+```bash
+npm run generate-subscription-key --prefix server -- pro 1 "Customer Name"
+```
 
-### Mobile access
+Tiers: `starter`, `pro`, `business`
 
-**On your local machine (same Wi‑Fi):** run `npm run dev` and open the **Network** URL from Vite (e.g. `http://192.168.x.x:5173`) on your phone.
-
-**In a cloud/remote dev environment:** the Vite Network IP (e.g. `172.30.x.x`) is internal and not reachable from your phone. Use a public tunnel instead:
+## Mobile access
 
 ```bash
 npm run dev:mobile
 ```
 
-This starts the app plus a Cloudflare quick tunnel. Open the printed `https://*.trycloudflare.com` URL on your phone. API requests are proxied through Vite, so no extra client config is needed.
-
-## Project Structure
-
-```
-├── client/          # React frontend (Vite)
-├── server/          # Express API + SQLite
-│   └── src/data/    # Sample business dataset
-└── package.json     # Root scripts
-```
+Open the printed `https://*.trycloudflare.com` URL on your phone.
 
 ## API Endpoints
 
-| Method | Endpoint                        | Description              |
-|--------|---------------------------------|--------------------------|
-| POST   | `/api/auth/login`               | Sign in                  |
-| POST   | `/api/auth/register`            | Create account           |
-| GET    | `/api/reports`                  | List recent reports      |
-| POST   | `/api/reports/upload`           | Upload CSV/XLSX          |
-| POST   | `/api/reports/sample/generate`  | Generate from sample data|
-| GET    | `/api/reports/:id`              | Get report details       |
-| GET    | `/api/reports/:id/download/:format` | Export PDF/Word/HTML |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/login` | Sign in |
+| POST | `/api/auth/register` | Register with passkey |
+| GET | `/api/subscriptions/plans` | List plans |
+| GET | `/api/subscriptions/status` | Current usage |
+| POST | `/api/subscriptions/activate` | Activate subscription key |
+| GET | `/api/reports/formats` | Allowed formats for user |
+| POST | `/api/reports/upload` | Upload data file |
+| GET | `/api/reports/:id/download/:format` | Export report |
 
-## Production Build
+## Production
 
 ```bash
 npm run build
 npm start
 ```
-
-The server serves the built frontend from `client/dist`.

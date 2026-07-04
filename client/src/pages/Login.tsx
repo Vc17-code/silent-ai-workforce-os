@@ -1,6 +1,8 @@
 import { useState, FormEvent, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import WhatsAppContact from '../components/WhatsAppContact';
+import { WHATSAPP_PASSKEY_MESSAGE } from '../constants/contact';
 
 export default function Login() {
   const { user, login, register } = useAuth();
@@ -85,8 +87,16 @@ export default function Login() {
           </div>
 
           {isRegister && (
-            <div className="mb-4 p-3 rounded-xl bg-amber-500/10 border border-amber-400/20 text-amber-200/90 text-xs sm:text-sm">
-              Registration requires a one-time access key. Request yours to unlock unlimited reports.
+            <div className="mb-4 space-y-3">
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-400/20 text-amber-200/90 text-xs sm:text-sm">
+                Registration requires a one-time passkey. Message us on WhatsApp to request yours.
+              </div>
+              <WhatsAppContact
+                variant="card"
+                message={WHATSAPP_PASSKEY_MESSAGE}
+                label="Get your passkey on WhatsApp"
+                description="We'll send your one-time registration key"
+              />
             </div>
           )}
 
@@ -94,7 +104,7 @@ export default function Login() {
             {isRegister && (
               <>
                 <div>
-                  <label className="block text-sm text-slate-300 mb-1.5">Access Key</label>
+                  <label className="block text-sm text-slate-300 mb-1.5">Passkey</label>
                   <input
                     type="text"
                     value={accessKey}
@@ -166,6 +176,9 @@ export default function Login() {
               Try demo (3 reports per device)
             </button>
             <p className="text-center text-xs text-slate-500 mt-3">demo@business.com / demo1234</p>
+            <div className="mt-4 flex justify-center">
+              <WhatsAppContact variant="inline" message={WHATSAPP_PASSKEY_MESSAGE} />
+            </div>
           </div>
         </div>
       </div>

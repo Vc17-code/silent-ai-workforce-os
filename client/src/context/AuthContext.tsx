@@ -1,14 +1,15 @@
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
-import { api, User, DemoUsage } from '../api/client';
+import { api, User, DemoUsage, SubscriptionStatus } from '../api/client';
 
 interface AuthContextType {
   user: User | null;
+  subscription: SubscriptionStatus | null;
   demoUsage: DemoUsage | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string, accessKey: string) => Promise<void>;
   logout: () => void;
-  refreshDemoUsage: () => Promise<void>;
+  refreshStatus: () => Promise<void>;
   isDemo: boolean;
 }
 
@@ -16,14 +17,16 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [subscription, setSubscription] = useState<SubscriptionStatus | null>(null);
   const [demoUsage, setDemoUsage] = useState<DemoUsage | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const refreshDemoUsage = useCallback(async () => {
+  const refreshStatus = useCallback(async () => {
     if (!localStorage.getItem('token')) return;
     try {
       const data = await api.getMe();
       setUser(data.user);
+      setSubscription(data.subscription);
       setDemoUsage(data.demoUsage ?? null);
       localStorage.setItem('user', JSON.stringify(data.user));
     } catch {
@@ -35,25 +38,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const stored = localStorage.getItem('user');
     if (stored && localStorage.getItem('token')) {
       setUser(JSON.parse(stored));
-      refreshDemoUsage().finally(() => setLoading(false));
+      refreshStatus().finally(() => setLoading(false));
     } else {
       setLoading(false);
     }
-  }, [refreshDemoUsage]);
+  }, [refreshStatus]);
 
   const login = async (email: string, password: string) => {
-    const { token, user: u, demoUsage: usage } = await api.login(email, password);
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(u));
-    setUser(u);
-    setDemoUsage(usage ?? null);
+    const data = await api.login(email, password);
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    setUser(data.user);
+    setSubscription(data.subscription);
+    setDemoUsage(data.demoUsage ?? null);
   };
 
   const register = async (name: string, email: string, password: string, accessKey: string) => {
-    const { token, user: u } = await api.register(email, password, name, accessKey);
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(u));
-    setUser(u);
+    const data = await api.register(email, password, name, accessKey);
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    setUser(data.user);
+    setSubscription(data.subscription);
     setDemoUsage(null);
   };
 
@@ -61,6 +66,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
+    setSubscription(null);
     setDemoUsage(null);
   };
 
@@ -68,7 +74,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, demoUsage, loading, login, register, logout, refreshDemoUsage, isDemo }}
+      value={{ user, subscription, demoUsage, loading, login, register, logout, refreshStatus, isDemo }}
     >
       {children}
     </AuthContext.Provider>

@@ -61,6 +61,32 @@ const userColumns = db.prepare("PRAGMA table_info(users)").all() as { name: stri
 if (!userColumns.some((c) => c.name === 'account_type')) {
   db.exec("ALTER TABLE users ADD COLUMN account_type TEXT NOT NULL DEFAULT 'registered'");
 }
+if (!userColumns.some((c) => c.name === 'subscription_tier')) {
+  db.exec("ALTER TABLE users ADD COLUMN subscription_tier TEXT NOT NULL DEFAULT 'starter'");
+}
+if (!userColumns.some((c) => c.name === 'subscription_expires_at')) {
+  db.exec('ALTER TABLE users ADD COLUMN subscription_expires_at TEXT');
+}
+if (!userColumns.some((c) => c.name === 'reports_this_month')) {
+  db.exec('ALTER TABLE users ADD COLUMN reports_this_month INTEGER NOT NULL DEFAULT 0');
+}
+if (!userColumns.some((c) => c.name === 'reports_month_reset')) {
+  db.exec('ALTER TABLE users ADD COLUMN reports_month_reset TEXT');
+}
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS subscription_keys (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    key TEXT UNIQUE NOT NULL,
+    tier TEXT NOT NULL,
+    duration_months INTEGER NOT NULL DEFAULT 1,
+    used_by_user_id INTEGER,
+    used_at TEXT,
+    created_at TEXT DEFAULT (datetime('now')),
+    note TEXT,
+    FOREIGN KEY (used_by_user_id) REFERENCES users(id)
+  );
+`);
 
 const reportColumns = db.prepare("PRAGMA table_info(reports)").all() as { name: string }[];
 if (!reportColumns.some((c) => c.name === 'is_showcase')) {
@@ -72,6 +98,10 @@ export interface User {
   email: string;
   name: string;
   account_type: 'demo' | 'registered';
+  subscription_tier: 'demo' | 'starter' | 'pro' | 'business';
+  subscription_expires_at: string | null;
+  reports_this_month: number;
+  reports_month_reset: string | null;
   created_at: string;
 }
 

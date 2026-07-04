@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "seed": "tsx src/seed.ts",
-    "generate-key": "tsx src/generate-key.ts"
+    "generate-key": "tsx src/generate-key.ts",
+    "generate-subscription-key": "tsx src/generate-subscription-key.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

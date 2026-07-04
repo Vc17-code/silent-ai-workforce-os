@@ -3,12 +3,35 @@ export interface User {
   email: string;
   name: string;
   accountType: 'demo' | 'registered';
+  subscriptionTier: 'demo' | 'starter' | 'pro' | 'business';
 }
 
 export interface DemoUsage {
   used: number;
   limit: number;
   remaining: number;
+}
+
+export interface SubscriptionStatus {
+  tier: string;
+  planName: string;
+  reportsUsed: number;
+  reportsLimit: number | null;
+  reportsRemaining: number | null;
+  formats: string[];
+  exports: string[];
+  expiresAt: string | null;
+  canCreateReport: boolean;
+}
+
+export interface SubscriptionPlan {
+  id: string;
+  name: string;
+  price: string;
+  reportsPerMonth: number | null;
+  formats: string[];
+  exports: string[];
+  highlight?: string;
 }
 
 export interface KeyNumber {
@@ -69,13 +92,8 @@ async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
     ...(options.headers as Record<string, string>),
   };
 
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-
-  if (!(options.body instanceof FormData)) {
-    headers['Content-Type'] = 'application/json';
-  }
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  if (!(options.body instanceof FormData)) headers['Content-Type'] = 'application/json';
 
   const res = await fetch(`${API_BASE}${url}`, { ...options, headers });
 
@@ -89,18 +107,32 @@ async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
 
 export const api = {
   login: (email: string, password: string) =>
-    request<{ token: string; user: User; demoUsage?: DemoUsage }>('/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-    }),
+    request<{ token: string; user: User; subscription: SubscriptionStatus; demoUsage?: DemoUsage }>(
+      '/auth/login',
+      { method: 'POST', body: JSON.stringify({ email, password }) }
+    ),
 
   register: (email: string, password: string, name: string, accessKey: string) =>
-    request<{ token: string; user: User }>('/auth/register', {
+    request<{ token: string; user: User; subscription: SubscriptionStatus }>('/auth/register', {
       method: 'POST',
       body: JSON.stringify({ email, password, name, accessKey }),
     }),
 
-  getMe: () => request<{ user: User; demoUsage?: DemoUsage }>('/auth/me'),
+  getMe: () =>
+    request<{ user: User; subscription: SubscriptionStatus; demoUsage?: DemoUsage }>('/auth/me'),
+
+  getPlans: () => request<{ demo: SubscriptionPlan; plans: SubscriptionPlan[] }>('/subscriptions/plans'),
+
+  getSubscriptionStatus: () => request<SubscriptionStatus>('/subscriptions/status'),
+
+  activateSubscription: (subscriptionKey: string) =>
+    request<{ tier: string; status: SubscriptionStatus; message: string }>('/subscriptions/activate', {
+      method: 'POST',
+      body: JSON.stringify({ subscriptionKey }),
+    }),
+
+  getSupportedFormats: () =>
+    request<{ tier: string; formats: string[]; exports: string[] }>('/reports/formats'),
 
   getReports: () => request<ReportSummary[]>('/reports'),
 
@@ -110,14 +142,16 @@ export const api = {
     const form = new FormData();
     form.append('file', file);
     if (title) form.append('title', title);
-    return request<{ id: number; title: string; analysis: Analysis; demoUsage?: DemoUsage }>(
-      '/reports/upload',
-      { method: 'POST', body: form, headers: {} }
-    );
+    return request<{
+      id: number;
+      title: string;
+      analysis: Analysis;
+      subscription: SubscriptionStatus;
+    }>('/reports/upload', { method: 'POST', body: form, headers: {} });
   },
 
   generateSample: () =>
-    request<{ id: number; title: string; analysis: Analysis; demoUsage?: DemoUsage }>(
+    request<{ id: number; title: string; analysis: Analysis; subscription: SubscriptionStatus }>(
       '/reports/sample/generate',
       { method: 'POST' }
     ),
@@ -129,7 +163,10 @@ export const api = {
     const res = await fetch(`${API_BASE}/reports/${id}/download/${format}`, {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
-    if (!res.ok) throw new Error('Download failed');
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'Download failed' }));
+      throw new Error(err.error || 'Download failed');
+    }
     const blob = await res.blob();
     const ext = format === 'docx' ? 'docx' : format;
     const url = URL.createObjectURL(blob);
@@ -140,3 +177,16 @@ export const api = {
     URL.revokeObjectURL(url);
   },
 };
+
+export const FORMAT_LABELS: Record<string, string> = {
+  csv: 'CSV',
+  xlsx: 'Excel',
+  xls: 'Excel 97',
+  tsv: 'TSV',
+  json: 'JSON',
+  xml: 'XML',
+  ods: 'OpenDocument',
+  txt: 'Text',
+};
+
+export const ALL_FORMATS = ['csv', 'xlsx', 'xls', 'tsv', 'json', 'xml', 'ods', 'txt'];

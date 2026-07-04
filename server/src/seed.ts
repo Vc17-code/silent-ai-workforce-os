@@ -19,7 +19,7 @@ const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(demoUser
 let userId: number;
 if (existing) {
   userId = existing.id;
-  db.prepare("UPDATE users SET account_type = 'demo' WHERE id = ?").run(userId);
+  db.prepare("UPDATE users SET account_type = 'demo', subscription_tier = 'demo' WHERE id = ?").run(userId);
   console.log('Demo user already exists');
 } else {
   const result = db
