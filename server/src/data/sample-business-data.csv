@@ -1,0 +1,49 @@
+Date,Category,Product,Revenue,Units,Cost,Region
+2025-01-05,Services,Consulting Package A,12500,5,7200,Northeast
+2025-01-12,Products,Widget Pro,8400,120,5100,West
+2025-01-18,Services,Implementation,22000,2,14500,Southeast
+2025-01-22,Products,Widget Lite,3200,80,1920,Midwest
+2025-02-03,Services,Training Workshop,6800,4,3200,Northeast
+2025-02-10,Products,Widget Pro,9100,130,5525,West
+2025-02-14,Services,Consulting Package B,15800,6,8900,Southeast
+2025-02-21,Products,Accessory Kit,2400,60,1440,Midwest
+2025-03-02,Services,Annual Support,36000,1,18000,Northeast
+2025-03-08,Products,Widget Pro,10200,145,6200,West
+2025-03-15,Services,Consulting Package A,14200,5,7800,Southeast
+2025-03-22,Products,Widget Lite,4100,95,2280,Midwest
+2025-04-01,Services,Implementation,28500,3,17200,Northeast
+2025-04-08,Products,Widget Pro,11500,160,7000,West
+2025-04-14,Services,Training Workshop,7500,5,3600,Southeast
+2025-04-20,Products,Accessory Kit,3100,75,1800,Midwest
+2025-05-02,Services,Consulting Package B,17200,7,9600,Northeast
+2025-05-09,Products,Widget Pro,12800,175,7700,West
+2025-05-16,Services,Consulting Package A,13800,5,7600,Southeast
+2025-05-23,Products,Widget Lite,4800,110,2640,Midwest
+2025-06-03,Services,Implementation,31000,3,18600,Northeast
+2025-06-10,Products,Widget Pro,13200,185,8000,West
+2025-06-17,Services,Annual Support,38000,1,19000,Southeast
+2025-06-24,Products,Accessory Kit,3600,85,2040,Midwest
+2025-07-01,Services,Consulting Package B,18500,8,10200,Northeast
+2025-07-08,Products,Widget Pro,14100,195,8550,West
+2025-07-15,Services,Training Workshop,8200,6,3900,Southeast
+2025-07-22,Products,Widget Lite,5200,120,2880,Midwest
+2025-08-02,Services,Consulting Package A,15200,6,8200,Northeast
+2025-08-09,Products,Widget Pro,14800,205,8900,West
+2025-08-16,Services,Implementation,33500,3,20100,Southeast
+2025-08-23,Products,Accessory Kit,3900,92,2208,Midwest
+2025-09-01,Services,Consulting Package B,19800,8,10800,Northeast
+2025-09-08,Products,Widget Pro,15500,215,9300,West
+2025-09-15,Services,Training Workshop,8800,6,4200,Southeast
+2025-09-22,Products,Widget Lite,5600,128,3072,Midwest
+2025-10-03,Services,Annual Support,42000,1,21000,Northeast
+2025-10-10,Products,Widget Pro,16200,225,9750,West
+2025-10-17,Services,Consulting Package A,16500,6,8800,Southeast
+2025-10-24,Products,Accessory Kit,4200,98,2352,Midwest
+2025-11-02,Services,Consulting Package B,21200,9,11500,Northeast
+2025-11-09,Products,Widget Pro,17100,238,10200,West
+2025-11-16,Services,Implementation,36000,4,21600,Southeast
+2025-11-23,Products,Widget Lite,6100,140,3360,Midwest
+2025-12-01,Services,Training Workshop,9500,7,4500,Northeast
+2025-12-08,Products,Widget Pro,18500,255,11000,West
+2025-12-15,Services,Consulting Package A,17800,7,9400,Southeast
+2025-12-22,Products,Accessory Kit,4600,105,2576,Midwest
