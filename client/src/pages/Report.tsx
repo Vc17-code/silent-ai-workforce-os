@@ -81,19 +81,19 @@ export default function Report() {
             </svg>
             Dashboard
           </Link>
-          <h1 className="text-3xl font-bold text-white">{report.title}</h1>
-          <p className="text-slate-400 mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">{report.title}</h1>
+          <p className="text-sm sm:text-base text-slate-400 mt-1 break-words">
             {report.filename} · {report.rowCount} rows · {new Date(report.createdAt).toLocaleDateString()}
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-3 sm:flex sm:flex-wrap gap-2">
           {(['pdf', 'docx', 'html'] as const).map((format) => (
             <button
               key={format}
               onClick={() => handleDownload(format)}
               disabled={downloading !== null}
-              className="btn-secondary text-sm flex items-center gap-2"
+              className="btn-secondary text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 py-2.5"
             >
               {downloading === format ? (
                 <div className="w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />

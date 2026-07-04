@@ -7,7 +7,10 @@
     @apply font-sans antialiased;
     background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 35%, #24243e 70%, #0f172a 100%);
     min-height: 100vh;
+    min-height: 100dvh;
     color: #e2e8f0;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 }
 
