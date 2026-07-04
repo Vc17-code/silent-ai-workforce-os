@@ -1,30 +1,54 @@
-import { Router } from 'express';
+import { Router, Response } from 'express';
 import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { db, ReportRow } from '../db.js';
 import { authMiddleware, AuthRequest } from '../middleware/auth.js';
-import { parseFile } from '../services/parser.js';
+import { parseFileForTier } from '../services/parser.js';
 import { generateAnalysis, Analysis } from '../services/analyzer.js';
 import { generateHTML, generatePDF, generateDOCX } from '../services/exporter.js';
-import { assertDemoCanCreateReport, isDemoUser, recordDemoReport } from '../services/demoLimits.js';
+import { isDemoUser, recordDemoReport } from '../services/demoLimits.js';
 import { getClientIp } from '../utils/clientIp.js';
+import {
+  assertCanCreateReport,
+  getEffectiveTier,
+  getSubscriptionStatus,
+  recordReportUsage,
+} from '../services/subscriptionService.js';
+import { tierAllowsExport } from '../services/subscriptions.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024 } });
 const router = Router();
 
 router.use(authMiddleware);
 
-function enforceDemoLimit(req: AuthRequest): string | null {
-  if (!isDemoUser(req.user!.email)) return null;
-  const ip = getClientIp(req);
+function createReportResponse(
+  req: AuthRequest,
+  res: Response,
+  build: () => { id: number; title: string; filename: string; rowCount: number; analysis: Analysis }
+) {
   try {
-    assertDemoCanCreateReport(ip);
-    return ip;
+    const ip = getClientIp(req);
+    assertCanCreateReport(req.user!, ip);
+    const payload = build();
+
+    if (isDemoUser(req.user!.email)) {
+      recordDemoReport(ip);
+    } else {
+      recordReportUsage(req.user!);
+    }
+
+    res.status(201).json({
+      ...payload,
+      createdAt: new Date().toISOString(),
+      subscription: getSubscriptionStatus(req.user!, ip),
+    });
   } catch (err) {
-    throw err;
+    const message = err instanceof Error ? err.message : 'Request failed';
+    const isLimit = message.includes('limit') || message.includes('Demo') || message.includes('plan');
+    res.status(isLimit ? 403 : 400).json({ error: message });
   }
 }
 
@@ -38,6 +62,11 @@ router.get('/', (req: AuthRequest, res) => {
     .all(req.user!.id);
 
   res.json(reports);
+});
+
+router.get('/formats', (req: AuthRequest, res) => {
+  const status = getSubscriptionStatus(req.user!, getClientIp(req));
+  res.json({ tier: status.tier, formats: status.formats, exports: status.exports });
 });
 
 router.get('/sample', (_req, res) => {
@@ -71,15 +100,15 @@ router.get('/:id', (req: AuthRequest, res) => {
 });
 
 router.post('/upload', upload.single('file'), (req: AuthRequest, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
-    }
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
 
-    const demoIp = enforceDemoLimit(req);
+  const tier = getEffectiveTier(req.user!);
+  const title = req.body.title || req.file.originalname.replace(/\.[^.]+$/, '');
 
-    const parsed = parseFile(req.file.buffer, req.file.originalname);
-    const title = req.body.title || req.file.originalname.replace(/\.[^.]+$/, '');
+  createReportResponse(req, res, () => {
+    const parsed = parseFileForTier(req.file!.buffer, req.file!.originalname, tier);
     const analysis = generateAnalysis(parsed, title);
 
     const result = db
@@ -90,37 +119,29 @@ router.post('/upload', upload.single('file'), (req: AuthRequest, res) => {
       .run(
         req.user!.id,
         title,
-        req.file.originalname,
+        req.file!.originalname,
         parsed.rows.length,
         JSON.stringify(parsed.columns),
         JSON.stringify(parsed.rows),
         JSON.stringify(analysis)
       );
 
-    const demoUsage = demoIp ? recordDemoReport(demoIp) : undefined;
-
-    res.status(201).json({
+    return {
       id: Number(result.lastInsertRowid),
       title,
-      filename: req.file.originalname,
+      filename: req.file!.originalname,
       rowCount: parsed.rows.length,
       analysis,
-      createdAt: new Date().toISOString(),
-      demoUsage,
-    });
-  } catch (err) {
-    const message = err instanceof Error ? err.message : 'Upload failed';
-    res.status(err instanceof Error && message.includes('Demo limit') ? 403 : 400).json({ error: message });
-  }
+    };
+  });
 });
 
 router.post('/sample/generate', (req: AuthRequest, res) => {
-  try {
-    const demoIp = enforceDemoLimit(req);
-
+  createReportResponse(req, res, () => {
     const samplePath = path.join(__dirname, '..', 'data', 'sample-business-data.csv');
     const buffer = fs.readFileSync(samplePath);
-    const parsed = parseFile(buffer, 'sample-business-data.csv');
+    const tier = getEffectiveTier(req.user!);
+    const parsed = parseFileForTier(buffer, 'sample-business-data.csv', tier);
     const title = 'Q4 2025 Business Performance';
     const analysis = generateAnalysis(parsed, title);
 
@@ -139,21 +160,14 @@ router.post('/sample/generate', (req: AuthRequest, res) => {
         JSON.stringify(analysis)
       );
 
-    const demoUsage = demoIp ? recordDemoReport(demoIp) : undefined;
-
-    res.status(201).json({
+    return {
       id: Number(result.lastInsertRowid),
       title,
       filename: 'sample-business-data.csv',
       rowCount: parsed.rows.length,
       analysis,
-      createdAt: new Date().toISOString(),
-      demoUsage,
-    });
-  } catch (err) {
-    const message = err instanceof Error ? err.message : 'Sample generation failed';
-    res.status(err instanceof Error && message.includes('Demo limit') ? 403 : 500).json({ error: message });
-  }
+    };
+  });
 });
 
 router.get('/:id/download/:format', async (req: AuthRequest, res) => {
@@ -165,9 +179,16 @@ router.get('/:id/download/:format', async (req: AuthRequest, res) => {
     return res.status(404).json({ error: 'Report not found' });
   }
 
+  const tier = getEffectiveTier(req.user!);
+  const format = String(req.params.format).toLowerCase();
+  if (!tierAllowsExport(tier, format)) {
+    return res.status(403).json({
+      error: `Your ${tier} plan does not include ${format.toUpperCase()} export. Upgrade to unlock.`,
+    });
+  }
+
   const analysis = JSON.parse(report.analysis_json) as Analysis;
   const safeTitle = report.title.replace(/[^a-zA-Z0-9-_ ]/g, '').trim();
-  const format = String(req.params.format).toLowerCase();
 
   try {
     if (format === 'html') {

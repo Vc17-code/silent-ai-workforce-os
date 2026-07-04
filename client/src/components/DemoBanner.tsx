@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import WhatsAppContact from './WhatsAppContact';
+import { WHATSAPP_PASSKEY_MESSAGE } from '../constants/contact';
 
 export default function DemoBanner() {
   const { isDemo, demoUsage, logout } = useAuth();
@@ -50,17 +52,25 @@ export default function DemoBanner() {
             {demoUsage.used}/{demoUsage.limit} reports used
           </p>
           {atLimit && (
-            <button
-              type="button"
-              onClick={() => {
-                sessionStorage.setItem('openRegister', '1');
-                logout();
-                navigate('/login');
-              }}
-              className="btn-primary text-sm text-center py-2 px-4"
-            >
-              Get access key
-            </button>
+            <div className="flex flex-col gap-2 w-full sm:w-auto">
+              <button
+                type="button"
+                onClick={() => {
+                  sessionStorage.setItem('openRegister', '1');
+                  logout();
+                  navigate('/login');
+                }}
+                className="btn-primary text-sm text-center py-2 px-4"
+              >
+                Register with passkey
+              </button>
+              <WhatsAppContact
+                variant="button"
+                message={WHATSAPP_PASSKEY_MESSAGE}
+                label="Get passkey on WhatsApp"
+                className="!py-2"
+              />
+            </div>
           )}
         </div>
       </div>

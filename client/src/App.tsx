@@ -2,6 +2,9 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Upload from './pages/Upload';
+import Plans from './pages/Plans';
+import Account from './pages/Account';
 import Report from './pages/Report';
 import Layout from './components/Layout';
 
@@ -31,6 +34,9 @@ export default function App() {
         }
       >
         <Route index element={<Dashboard />} />
+        <Route path="upload" element={<Upload />} />
+        <Route path="plans" element={<Plans />} />
+        <Route path="account" element={<Account />} />
         <Route path="report/:id" element={<Report />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

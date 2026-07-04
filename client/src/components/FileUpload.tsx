@@ -1,26 +1,40 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
+import { FORMAT_LABELS } from '../api/client';
 
 interface FileUploadProps {
   onUpload: (file: File) => void;
   loading?: boolean;
   disabled?: boolean;
+  allowedFormats?: string[];
 }
 
-export default function FileUpload({ onUpload, loading, disabled }: FileUploadProps) {
+const DEFAULT_FORMATS = ['csv', 'xlsx', 'xls'];
+
+export default function FileUpload({
+  onUpload,
+  loading,
+  disabled,
+  allowedFormats = DEFAULT_FORMATS,
+}: FileUploadProps) {
   const [dragOver, setDragOver] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
 
+  const accept = useMemo(
+    () => allowedFormats.map((f) => `.${f}`).join(','),
+    [allowedFormats]
+  );
+
   const handleFile = useCallback(
     (file: File) => {
-      const ext = file.name.toLowerCase().split('.').pop();
-      if (ext !== 'csv' && ext !== 'xlsx' && ext !== 'xls') {
-        alert('Please upload a CSV or XLSX file.');
+      const ext = file.name.toLowerCase().split('.').pop() ?? '';
+      if (!allowedFormats.includes(ext)) {
+        alert(`Your plan does not support .${ext} files. Allowed: ${allowedFormats.join(', ')}`);
         return;
       }
       setFileName(file.name);
       onUpload(file);
     },
-    [onUpload]
+    [onUpload, allowedFormats]
   );
 
   const onDrop = useCallback(
@@ -51,7 +65,7 @@ export default function FileUpload({ onUpload, loading, disabled }: FileUploadPr
       <label className={`flex flex-col items-center py-10 px-6 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
         <input
           type="file"
-          accept=".csv,.xlsx,.xls"
+          accept={accept}
           className="hidden"
           disabled={loading || disabled}
           onChange={(e) => {
@@ -71,7 +85,7 @@ export default function FileUpload({ onUpload, loading, disabled }: FileUploadPr
         </div>
 
         <p className="text-base sm:text-lg font-medium text-white mb-1">
-          {disabled ? 'Demo limit reached' : loading ? 'Analyzing your data...' : (
+          {disabled ? 'Report limit reached' : loading ? 'Analyzing your data...' : (
             <>
               <span className="sm:hidden">Tap to upload your file</span>
               <span className="hidden sm:inline">Drag & drop your file here</span>
@@ -79,13 +93,16 @@ export default function FileUpload({ onUpload, loading, disabled }: FileUploadPr
           )}
         </p>
         <p className="text-sm text-slate-400 mb-4">
-          <span className="sm:hidden">Choose a CSV or Excel file</span>
+          <span className="sm:hidden">Choose a supported file</span>
           <span className="hidden sm:inline">or click to browse</span>
         </p>
 
-        <div className="flex gap-2">
-          <span className="px-3 py-1 rounded-lg bg-white/10 text-xs text-slate-300">CSV</span>
-          <span className="px-3 py-1 rounded-lg bg-white/10 text-xs text-slate-300">XLSX</span>
+        <div className="flex flex-wrap justify-center gap-2 max-w-xs">
+          {allowedFormats.map((fmt) => (
+            <span key={fmt} className="px-2.5 py-1 rounded-lg bg-white/10 text-xs text-slate-300">
+              {FORMAT_LABELS[fmt] ?? fmt.toUpperCase()}
+            </span>
+          ))}
         </div>
 
         {fileName && !loading && (
