@@ -1,30 +1,77 @@
-# Disha Properties — Local Business Website
+# Disha Properties — Premium Real Estate Website
 
-A clean, fast, mobile-responsive static website for **Disha Properties**, a real estate and construction business serving **Ajmer, Makarwali, and Vaishali Nagar, Rajasthan**.
+A premium, conversion-focused real estate website for **Disha Properties**, trusted real estate experts in Makarwali, Ajmer with 16+ years of experience.
 
-## Pages
+## Features
 
-| Page | File |
-|------|------|
-| Homepage | `index.html` |
-| Residential Properties | `services/residential-properties.html` |
-| Commercial Real Estate | `services/commercial-real-estate.html` |
-| Bungalows & Building Properties | `services/bungalows-building-properties.html` |
-| Contact | `contact.html` |
+### Public Website
+- Fullscreen hero with statistics and CTAs
+- Featured properties with dynamic cards
+- Property categories, services, and process timeline
+- Customer testimonials and FAQ with schema markup
+- Contact form with inquiry capture
+- Property gallery with filters and lightbox
+- Individual property detail pages with gallery, map, and inquiry form
+- Floating WhatsApp and call buttons
+- SEO: OpenGraph, Twitter Cards, LocalBusiness schema, sitemap, robots.txt
+
+### Owner Dashboard (Premium)
+- Secure password-protected login at `/owner/login`
+- Dashboard with analytics overview
+- Add, edit, and delete property listings
+- Upload images to server
+- Feature listings, hide listings, mark sold/rented
+- Manage customer inquiries
+- Properties appear instantly on the public site
+
+## Tech Stack
+
+- **Frontend:** Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4
+- **Forms:** React Hook Form + Zod validation
+- **Storage:** JSON file-based (development); Supabase-ready architecture
+- **Hosting:** Vercel (recommended)
 
 ## Quick Start
 
-Open `index.html` in a browser, or serve locally:
-
 ```bash
-# Python
-python3 -m http.server 8080
+# Install dependencies
+npm install
 
-# Node.js (npx)
-npx serve .
+# Copy environment variables
+cp .env.example .env.local
+
+# Start development server
+npm run dev
 ```
 
-Then visit `http://localhost:8080`
+Visit `http://localhost:3000`
+
+### Owner Login
+- URL: `http://localhost:3000/owner/login`
+- Default password: `disha2024` (set `OWNER_PASSWORD` in `.env.local`)
+
+## Project Structure
+
+```
+/app
+  /(marketing)          # Public pages with navbar/footer
+    page.tsx            # Homepage
+    /properties         # Property listings & detail pages
+    /about, /services, /contact, /gallery
+  /owner
+    /login              # Owner authentication
+    /(panel)            # Protected dashboard routes
+      /dashboard
+      /listings
+      /enquiries
+      /settings
+  /api                  # REST API routes
+/components             # Reusable UI components
+/lib                    # Config, database, auth, SEO, utils
+/types                  # TypeScript interfaces
+/data                   # JSON data store (properties, inquiries)
+/public/uploads         # Uploaded property images
+```
 
 ## Business Details
 
@@ -36,45 +83,31 @@ Then visit `http://localhost:8080`
 | Address | S8 G Block, Oppo First Step School, Makadwali Road, Makarwali, Ajmer-305004, Rajasthan |
 | Service Area | Makarwali, Vaishali Nagar, Ajmer City |
 | Hours | Mon–Sat 10AM–7PM, Sun 10AM–5PM |
-| Colors | Navy Blue (`#0a2540`) + Orange (`#f97316`) — edit `css/styles.css` `:root` |
+| Experience | 16+ Years |
+| Primary Color | Deep Royal Blue (#1E3A8A) |
+| Secondary | Emerald Green (#10B981) |
+| Accent | Gold (#F59E0B) |
 
-## Features
+## Deploy to Vercel
 
-- Mobile-responsive layout with hamburger navigation
-- Click-to-call phone CTAs throughout
-- Lead-generation contact form (client-side demo)
-- Google Maps embed for office location
-- Local SEO meta tags and keywords for Ajmer
-- Accessible markup (ARIA labels, semantic HTML)
-- Lazy-loaded images for fast page loads
-- No build step required — pure HTML/CSS/JS
+1. Push to GitHub
+2. Import project at [vercel.com](https://vercel.com)
+3. Set environment variables:
+   - `NEXT_PUBLIC_SITE_URL` — your production domain
+   - `OWNER_PASSWORD` — secure owner password
+4. Deploy
 
-## Deploy Online
+## Plans
 
-Your site is static HTML — no server needed. Pick **one** option below.
+| Feature | Free | Premium |
+|---------|------|---------|
+| Property listings | 1 (managed by agency) | Unlimited |
+| Image uploads | ✓ | Unlimited |
+| Owner dashboard | — | ✓ |
+| Featured properties | — | ✓ |
+| Lead management | — | ✓ |
+| Video uploads | — | ✓ |
 
-### Recommended: Netlify
+## License
 
-1. Go to **[netlify.com](https://www.netlify.com)** → Sign up free
-2. **Add new site** → Import your GitHub repo
-3. Deploy settings: leave build command empty, publish directory `.`
-4. Rename site to e.g. `disha-properties` → `https://disha-properties.netlify.app`
-5. Add custom domain (e.g. `dishapropertiesajmer.in`) in Domain management
-
-### GitHub Pages
-
-Push to `main` — the workflow `.github/workflows/deploy-pages.yml` deploys automatically.
-
-### Contact Form (Production)
-
-The contact form shows a success message on submit (demo only). For production:
-
-- **Netlify:** add `data-netlify="true"` to the form in `contact.html`
-- **Any host:** use [Formspree](https://formspree.io) — change form `action` to your Formspree endpoint
-
-## Local Preview
-
-```bash
-./start.sh
-# Open http://localhost:8080
-```
+Proprietary — Built for Disha Properties.
