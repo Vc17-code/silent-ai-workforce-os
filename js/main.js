@@ -44,7 +44,7 @@
         formSuccess.textContent =
           "Thank you, " +
           name.value.trim() +
-          "! We'll call you back within 30 minutes during business hours.";
+          "! We'll call you back shortly during business hours.";
       }
 
       contactForm.reset();
