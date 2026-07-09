@@ -22,13 +22,13 @@ export const contactInfo: ContactInfo = {
   tagline: "Your Trusted Property Partner in Ajmer Since 2009",
   phone: "+919414435920",
   whatsapp: "919414435920",
-  email: "info@dishaproperties.in",
-  address: "Makarwali, Ajmer",
-  city: "Ajmer, Rajasthan",
-  businessHours: "Monday – Saturday, 10 AM – 7 PM",
+  email: "info@dishapropertiesajmer.in",
+  address: "S8 G Block, Oppo First Step School, Makadwali Road, Makarwali",
+  city: "Ajmer-305004, Rajasthan",
+  businessHours: "Mon–Sat 10AM–7PM, Sun 10AM–5PM",
   experienceYears: 16,
   mapEmbedUrl:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3609.5!2d74.64!3d26.45!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDI3JzAwLjAiTiA3NMKwMzgnMjQuMCJF!5e0!3m2!1sen!2sin!4v1",
+    "https://maps.google.com/maps?q=S8+G+Block,+Makadwali+Road,+Makarwali,+Ajmer+305004,+Rajasthan&output=embed",
   socialLinks: {
     facebook: "https://facebook.com",
     instagram: "https://instagram.com",

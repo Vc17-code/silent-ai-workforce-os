@@ -78,8 +78,11 @@ Visit `http://localhost:3000`
 | Field | Value |
 |-------|-------|
 | Business Name | Disha Properties |
-| Location | Makarwali, Ajmer |
-| Phone | +91 9414435920 |
+| Phone | +91 94144 35920 |
+| Email | info@dishapropertiesajmer.in |
+| Address | S8 G Block, Oppo First Step School, Makadwali Road, Makarwali, Ajmer-305004, Rajasthan |
+| Service Area | Makarwali, Vaishali Nagar, Ajmer City |
+| Hours | Mon–Sat 10AM–7PM, Sun 10AM–5PM |
 | Experience | 16+ Years |
 | Primary Color | Deep Royal Blue (#1E3A8A) |
 | Secondary | Emerald Green (#10B981) |
