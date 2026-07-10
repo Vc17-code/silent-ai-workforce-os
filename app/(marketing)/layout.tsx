@@ -14,7 +14,7 @@ export default function MarketingLayout({
     <>
       <EmergencyBanner />
       <Navbar />
-      <main className="pb-24 md:pb-0">{children}</main>
+      <main className="pb-[5.5rem] md:pb-0">{children}</main>
       <Footer />
       <FloatingActions />
       <BookingModal />

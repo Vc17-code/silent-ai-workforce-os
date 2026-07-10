@@ -15,6 +15,8 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
@@ -23,21 +25,39 @@
       radial-gradient(ellipse 80% 50% at 10% -10%, rgba(61, 155, 143, 0.12), transparent),
       radial-gradient(ellipse 60% 40% at 100% 0%, rgba(15, 92, 92, 0.08), transparent),
       linear-gradient(180deg, #f4f8f7 0%, #f7f4ef 40%, #eef5f3 100%);
-    background-attachment: fixed;
+  }
+
+  @media (min-width: 768px) {
+    body {
+      background-attachment: fixed;
+    }
   }
 
   ::selection {
     background: rgba(61, 155, 143, 0.25);
   }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 @layer utilities {
   .section-padding {
-    @apply py-20 md:py-28;
+    @apply py-14 md:py-28;
   }
 
   .container-custom {
-    @apply mx-auto max-w-6xl px-5 sm:px-6 lg:px-8;
+    @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .safe-area-pb {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .safe-area-pt {
+    padding-top: env(safe-area-inset-top, 0px);
   }
 
   .font-display {
@@ -53,15 +73,15 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-primary-soft hover:shadow-[0_10px_30px_rgba(15,92,92,0.25)] active:scale-[0.98];
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-primary-soft hover:shadow-[0_10px_30px_rgba(15,92,92,0.25)] active:scale-[0.98] sm:px-6;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl border border-primary/15 bg-white/80 px-6 py-3.5 text-sm font-semibold text-primary transition-all duration-300 hover:border-primary/30 hover:bg-white;
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-primary/15 bg-white/80 px-5 py-3.5 text-sm font-semibold text-primary transition-all duration-300 hover:border-primary/30 hover:bg-white sm:px-6;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold text-white/95 transition-all duration-300 hover:bg-white/10;
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white/95 transition-all duration-300 hover:bg-white/10 sm:px-5;
   }
 
   .section-label {
@@ -69,11 +89,11 @@
   }
 
   .heading-xl {
-    @apply font-display text-4xl font-medium leading-[1.1] tracking-tight text-ink md:text-5xl lg:text-6xl;
+    @apply font-display text-[2.15rem] font-medium leading-[1.1] tracking-tight text-ink sm:text-4xl md:text-5xl lg:text-6xl;
   }
 
   .heading-lg {
-    @apply font-display text-3xl font-medium leading-tight tracking-tight text-ink md:text-4xl;
+    @apply font-display text-[1.75rem] font-medium leading-tight tracking-tight text-ink sm:text-3xl md:text-4xl;
   }
 
   .heading-md {

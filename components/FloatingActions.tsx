@@ -39,11 +39,14 @@ export default function FloatingActions() {
       </div>
 
       {/* Mobile sticky bottom bar */}
-      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-primary/10 bg-white/95 backdrop-blur-xl md:hidden">
-        <div className="grid grid-cols-4 gap-1 px-2 py-2 safe-area-pb">
+      <nav
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-primary/10 bg-white/95 backdrop-blur-xl md:hidden"
+        aria-label="Mobile quick actions"
+      >
+        <div className="safe-area-pb grid grid-cols-4 gap-1 px-1.5 pt-1.5">
           <a
             href={getPhoneLink(contactInfo.phone)}
-            className="flex flex-col items-center gap-1 rounded-xl py-2 text-[11px] font-semibold text-primary"
+            className="flex min-h-14 flex-col items-center justify-center gap-0.5 rounded-xl py-2 text-[11px] font-semibold text-primary active:bg-mist"
           >
             <Phone className="h-5 w-5" />
             Call
@@ -52,14 +55,14 @@ export default function FloatingActions() {
             href={getWhatsAppLink(contactInfo.whatsapp, whatsappMessage)}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center gap-1 rounded-xl py-2 text-[11px] font-semibold text-primary"
+            className="flex min-h-14 flex-col items-center justify-center gap-0.5 rounded-xl py-2 text-[11px] font-semibold text-primary active:bg-mist"
           >
             <MessageCircle className="h-5 w-5" />
             WhatsApp
           </a>
           <Link
             href="/book"
-            className="flex flex-col items-center gap-1 rounded-xl bg-primary py-2 text-[11px] font-semibold text-white"
+            className="flex min-h-14 flex-col items-center justify-center gap-0.5 rounded-xl bg-primary py-2 text-[11px] font-semibold text-white active:bg-primary-soft"
           >
             <Calendar className="h-5 w-5" />
             Book
@@ -68,13 +71,13 @@ export default function FloatingActions() {
             href={contactInfo.mapLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center gap-1 rounded-xl py-2 text-[11px] font-semibold text-primary"
+            className="flex min-h-14 flex-col items-center justify-center gap-0.5 rounded-xl py-2 text-[11px] font-semibold text-primary active:bg-mist"
           >
             <MapPin className="h-5 w-5" />
             Directions
           </a>
         </div>
-      </div>
+      </nav>
     </>
   );
 }
