@@ -1,0 +1,72 @@
+{
+  "about": {
+    "history": "Smilecare Dentist opened in Vashi to bring hospital-grade clinical standards into a warm neighbourhood clinic. What began as a focused endodontic practice has grown into a full-spectrum dental home for Navi Mumbai families.",
+    "mission": "To deliver precise, gentle dental care that patients understand and trust — every visit, every smile.",
+    "vision": "To be Navi Mumbai’s most trusted dental clinic for comfort-led, technology-enabled oral healthcare.",
+    "values": [
+      {
+        "title": "Patient first",
+        "description": "Your comfort and clarity guide every decision."
+      },
+      {
+        "title": "Clinical excellence",
+        "description": "Evidence-based care with modern equipment."
+      },
+      {
+        "title": "Transparency",
+        "description": "Clear plans, honest timelines, no surprises."
+      },
+      {
+        "title": "Sterile safety",
+        "description": "Rigorous sterilization you can see and trust."
+      }
+    ],
+    "achievements": [
+      "4.9★ average Google rating from 180+ patients",
+      "12+ years of clinical leadership",
+      "Digital diagnostics across all treatment rooms",
+      "Dedicated sterilization protocols reviewed quarterly"
+    ],
+    "equipment": [
+      "Digital RVG & OPG imaging",
+      "Intraoral cameras",
+      "LED curing & magnification loupes",
+      "Class-B autoclave sterilization",
+      "Comfort-focused dental chairs"
+    ],
+    "sterilization": "Every instrument follows a tracked sterilization cycle with Class-B autoclaves, sealed pouches, and single-use disposables wherever clinically appropriate. Surfaces are disinfected between patients using medical-grade protocols.",
+    "philosophy": "We believe great dentistry is quiet confidence — skilled hands, clear communication, and a clinic designed to put you at ease."
+  },
+  "whyChooseUs": [
+    {
+      "title": "Gentle, explained care",
+      "description": "We walk you through options before we begin — so you always know what happens next."
+    },
+    {
+      "title": "Modern diagnostics",
+      "description": "Digital imaging and precise planning for predictable, minimally invasive treatment."
+    },
+    {
+      "title": "Hospital-grade hygiene",
+      "description": "Visible sterilization standards and single-patient instrument protocols."
+    },
+    {
+      "title": "Family-friendly clinic",
+      "description": "From first check-ups to smile makeovers — one trusted dental home for all ages."
+    }
+  ],
+  "seo": {
+    "defaultTitle": "Smilecare Dentist | Premium Dental Clinic in Navi Mumbai",
+    "defaultDescription": "Book an appointment at Smilecare Dentist, Vashi — trusted dental care for root canals, implants, whitening, braces, and family dentistry in Navi Mumbai.",
+    "keywords": [
+      "dentist Navi Mumbai",
+      "Smilecare Dentist",
+      "dental clinic Vashi",
+      "teeth whitening Navi Mumbai",
+      "root canal Navi Mumbai",
+      "dental implants Navi Mumbai",
+      "best dentist Navi Mumbai",
+      "kids dentist Navi Mumbai"
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+[
+  {
+    "id": "3c8a8068-134b-4804-b77d-3f4cd6d68c99",
+    "title": "Whitening transformation",
+    "category": "before-after",
+    "beforeImage": "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=600&q=80",
+    "afterImage": "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&q=80",
+    "description": "Professional whitening with natural brightness",
+    "featured": true,
+    "createdAt": "2026-07-10T18:35:50.154Z"
+  },
+  {
+    "id": "449b1fbb-eb10-4119-9041-7ec73905471b",
+    "title": "Treatment suite",
+    "category": "clinic",
+    "image": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80",
+    "description": "Calm, modern treatment rooms",
+    "featured": true,
+    "createdAt": "2026-07-10T18:35:50.154Z"
+  },
+  {
+    "id": "1511e82a-3d17-485f-8e0a-6e7c808f7f53",
+    "title": "Reception lounge",
+    "category": "clinic",
+    "image": "https://images.unsplash.com/photo-1629909615184-74f495363b67?w=800&q=80",
+    "description": "Welcoming reception and waiting area",
+    "featured": true,
+    "createdAt": "2026-07-10T18:35:50.154Z"
+  },
+  {
+    "id": "ba567b33-12aa-4075-8d56-0ce2659ec3eb",
+    "title": "Digital diagnostics",
+    "category": "equipment",
+    "image": "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&q=80",
+    "description": "Modern imaging for precise planning",
+    "featured": false,
+    "createdAt": "2026-07-10T18:35:50.154Z"
+  },
+  {
+    "id": "af59c6fb-4096-4831-bcd6-d4b42e68cc8b",
+    "title": "Confident smile",
+    "category": "smile",
+    "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&q=80",
+    "description": "Patient smile after aesthetic care",
+    "featured": true,
+    "createdAt": "2026-07-10T18:35:50.154Z"
+  }
+]

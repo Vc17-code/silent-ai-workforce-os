@@ -1,113 +1,63 @@
-# Disha Properties — Premium Real Estate Website
+# Smilecare Dentist — Premium Dental Clinic Website
 
-A premium, conversion-focused real estate website for **Disha Properties**, trusted real estate experts in Makarwali, Ajmer with 16+ years of experience.
+Enterprise-grade website for **Smilecare Dentist**, Vashi, Navi Mumbai — built for trust, education, and appointment conversion.
 
 ## Features
 
-### Public Website
-- Fullscreen hero with statistics and CTAs
-- Featured properties with dynamic cards
-- Property categories, services, and process timeline
-- Customer testimonials and FAQ with schema markup
-- Contact form with inquiry capture
-- Property gallery with filters and lightbox
-- Individual property detail pages with gallery, map, and inquiry form
-- Floating WhatsApp and call buttons
-- SEO: OpenGraph, Twitter Cards, LocalBusiness schema, sitemap, robots.txt
+### Public website
+- Premium full-bleed hero with brand-first composition
+- Clinic introduction, doctor highlight, why-choose-us
+- Featured treatments with dedicated detail pages (overview, benefits, procedure, recovery, FAQs)
+- Patient testimonials + Google review stats
+- Smile gallery with before/after and lightbox
+- 360° virtual tour placeholder (Matterport / Pannellum / Marzipano ready)
+- Introductory video placeholder (admin-uploadable)
+- Contact experience with dialer, WhatsApp, email, Maps
+- Appointment booking form with validation
+- Floating Call / WhatsApp / Book actions + mobile sticky bar
+- Exit-intent booking prompt (desktop)
+- Emergency contact banner + insurance trust signals
+- SEO: Dentist/MedicalBusiness schema, Open Graph, sitemap, robots.txt
 
-### Owner Dashboard (Premium)
-- Secure password-protected login at `/owner/login`
-- Dashboard with analytics overview
-- Add, edit, and delete property listings
-- Upload images to server
-- Feature listings, hide listings, mark sold/rented
-- Manage customer inquiries
-- Properties appear instantly on the public site
+### Owner dashboard (`/owner/login`)
+- Secure password login
+- Appointments management
+- Treatments, gallery, testimonials CMS
+- Doctor profile, FAQs, offers
+- Video & 360° tour media settings
+- SEO & about content editor
+- Image upload API
 
-## Tech Stack
+## Tech stack
+- Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4
+- React Hook Form + Zod
+- JSON file storage (Supabase-ready architecture)
 
-- **Frontend:** Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4
-- **Forms:** React Hook Form + Zod validation
-- **Storage:** JSON file-based (development); Supabase-ready architecture
-- **Hosting:** Vercel (recommended)
-
-## Quick Start
+## Quick start
 
 ```bash
-# Install dependencies
 npm install
-
-# Copy environment variables
 cp .env.example .env.local
-
-# Start development server
 npm run dev
 ```
 
 Visit `http://localhost:3000`
 
-### Owner Login
-- URL: `http://localhost:3000/owner/login`
-- Default password: `disha2024` (set `OWNER_PASSWORD` in `.env.local`)
+### Owner login
+- URL: `/owner/login`
+- Default password: `smilecare2024` (set `OWNER_PASSWORD` in `.env.local`)
 
-## Project Structure
-
-```
-/app
-  /(marketing)          # Public pages with navbar/footer
-    page.tsx            # Homepage
-    /properties         # Property listings & detail pages
-    /about, /services, /contact, /gallery
-  /owner
-    /login              # Owner authentication
-    /(panel)            # Protected dashboard routes
-      /dashboard
-      /listings
-      /enquiries
-      /settings
-  /api                  # REST API routes
-/components             # Reusable UI components
-/lib                    # Config, database, auth, SEO, utils
-/types                  # TypeScript interfaces
-/data                   # JSON data store (properties, inquiries)
-/public/uploads         # Uploaded property images
-```
-
-## Business Details
+## Business details
 
 | Field | Value |
 |-------|-------|
-| Business Name | Disha Properties |
-| Phone | +91 94144 35920 |
-| Email | info@dishapropertiesajmer.in |
-| Address | S8 G Block, Oppo First Step School, Makadwali Road, Makarwali, Ajmer-305004, Rajasthan |
-| Service Area | Makarwali, Vaishali Nagar, Ajmer City |
-| Hours | Mon–Sat 10AM–7PM, Sun 10AM–5PM |
-| Experience | 16+ Years |
-| Primary Color | Deep Royal Blue (#1E3A8A) |
-| Secondary | Emerald Green (#10B981) |
-| Accent | Gold (#F59E0B) |
+| Name | Smilecare Dentist |
+| Location | Sector 17, Vashi, Navi Mumbai |
+| Phone | +91 22 4123 4567 |
+| Emergency | +91 98765 43210 |
+| Email | hello@smilecarenavimumbai.com |
+| Hours | Mon–Sat 10AM–8PM, Sun 10AM–2PM |
+| Doctor | Dr. Ananya Mehta, BDS, MDS |
 
-## Deploy to Vercel
-
-1. Push to GitHub
-2. Import project at [vercel.com](https://vercel.com)
-3. Set environment variables:
-   - `NEXT_PUBLIC_SITE_URL` — your production domain
-   - `OWNER_PASSWORD` — secure owner password
-4. Deploy
-
-## Plans
-
-| Feature | Free | Premium |
-|---------|------|---------|
-| Property listings | 1 (managed by agency) | Unlimited |
-| Image uploads | ✓ | Unlimited |
-| Owner dashboard | — | ✓ |
-| Featured properties | — | ✓ |
-| Lead management | — | ✓ |
-| Video uploads | — | ✓ |
-
-## License
-
-Proprietary — Built for Disha Properties.
+## Future modules (architecture-ready)
+Patient portal, teleconsultation, digital prescriptions, online payments, AI chatbot, smile simulator, multi-branch, CRM, analytics.

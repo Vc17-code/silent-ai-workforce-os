@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Fraunces, Manrope } from "next/font/google";
 import "./globals.css";
-import { generateSEO, localBusinessJsonLd } from "@/lib/seo";
-import { seedPropertiesIfEmpty } from "@/lib/db";
+import { generateSEO, dentistJsonLd } from "@/lib/seo";
+import { seedClinicDataIfEmpty } from "@/lib/db";
 import { siteConfig } from "@/lib/config";
 
-const inter = Inter({
+const fraunces = Fraunces({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-fraunces",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-manrope",
 });
 
 export const metadata: Metadata = {
@@ -21,19 +27,19 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  await seedPropertiesIfEmpty();
+  await seedClinicDataIfEmpty();
 
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${fraunces.variable} ${manrope.variable}`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(localBusinessJsonLd()),
+            __html: JSON.stringify(dentistJsonLd()),
           }}
         />
       </head>
-      <body className="font-sans">{children}</body>
+      <body className={`${manrope.className} font-sans`}>{children}</body>
     </html>
   );
 }

@@ -1,0 +1,17 @@
+{
+  "name": "Smilecare Dentist",
+  "short_name": "Smilecare",
+  "description": "Premium dental care in Navi Mumbai",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F4EF",
+  "theme_color": "#0F5C5C",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

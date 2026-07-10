@@ -1,0 +1,37 @@
+[
+  {
+    "id": "0c73e992-26a2-41ea-b126-ea9c16f44d14",
+    "question": "How do I book an appointment?",
+    "answer": "Use the Book Appointment form on our website, call us, or message on WhatsApp. We’ll confirm your preferred slot quickly.",
+    "category": "General",
+    "order": 1
+  },
+  {
+    "id": "2ecd128c-e29b-41b5-8e49-9d7e5413afd2",
+    "question": "Do you accept dental insurance?",
+    "answer": "We support major TPA and corporate dental plans. Share your policy details when booking and we’ll guide you on coverage.",
+    "category": "Billing",
+    "order": 2
+  },
+  {
+    "id": "75f3e24d-2d80-495d-8a95-8318df3a4d3b",
+    "question": "Is emergency dental care available?",
+    "answer": "Yes. Call our emergency number for urgent pain, swelling, or trauma. We’ll prioritize same-day care whenever possible.",
+    "category": "Emergency",
+    "order": 3
+  },
+  {
+    "id": "a821f9a4-6e70-48a9-822e-6663a4ffd810",
+    "question": "What sterilization standards do you follow?",
+    "answer": "We use Class-B autoclaves, sealed instrument pouches, and medical-grade surface disinfection between every patient.",
+    "category": "Safety",
+    "order": 4
+  },
+  {
+    "id": "ab476b77-4757-48b5-a4f3-25262736a4c6",
+    "question": "Do you treat children?",
+    "answer": "Absolutely. Our pediatric visits are designed to be gentle and positive, helping kids build healthy dental habits early.",
+    "category": "Family",
+    "order": 5
+  }
+]

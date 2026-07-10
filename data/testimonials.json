@@ -1,0 +1,42 @@
+[
+  {
+    "id": "dbc6b298-9bc4-4c4b-89cb-aa2aeddf74a5",
+    "name": "Riya Sharma",
+    "treatment": "Root Canal",
+    "text": "I was anxious about my root canal, but the team explained every step. Completely painless and genuinely caring.",
+    "rating": 5,
+    "featured": true,
+    "source": "google",
+    "createdAt": "2026-07-10T18:35:50.154Z"
+  },
+  {
+    "id": "d12f1ee2-3864-4060-95f7-04d9bd8b7e60",
+    "name": "Arjun Patel",
+    "treatment": "Smile Makeover",
+    "text": "My smile makeover looks natural — not overdone. The clinic feels premium without being intimidating.",
+    "rating": 5,
+    "featured": true,
+    "source": "google",
+    "createdAt": "2026-07-10T18:35:50.154Z"
+  },
+  {
+    "id": "45718fb6-8112-4803-b90f-049e69301f04",
+    "name": "Neha Kulkarni",
+    "treatment": "Cleaning",
+    "text": "Clean, modern, and punctual. Booking was easy and the follow-up reminders were thoughtful.",
+    "rating": 5,
+    "featured": true,
+    "source": "website",
+    "createdAt": "2026-07-10T18:35:50.154Z"
+  },
+  {
+    "id": "0a04d2a7-f861-4b0a-8388-238395cd41d6",
+    "name": "Vikram Desai",
+    "treatment": "Implants",
+    "text": "Implant planning was thorough. I appreciated the transparent timeline and aftercare support.",
+    "rating": 5,
+    "featured": true,
+    "source": "google",
+    "createdAt": "2026-07-10T18:35:50.154Z"
+  }
+]

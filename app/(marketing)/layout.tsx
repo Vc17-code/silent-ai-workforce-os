@@ -1,6 +1,9 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import FloatingButtons from "@/components/FloatingButtons";
+import FloatingActions from "@/components/FloatingActions";
+import EmergencyBanner from "@/components/EmergencyBanner";
+import BookingModal from "@/components/BookingModal";
+import ExitIntentPrompt from "@/components/ExitIntentPrompt";
 
 export default function MarketingLayout({
   children,
@@ -9,10 +12,13 @@ export default function MarketingLayout({
 }) {
   return (
     <>
+      <EmergencyBanner />
       <Navbar />
-      <main>{children}</main>
+      <main className="pb-24 md:pb-0">{children}</main>
       <Footer />
-      <FloatingButtons />
+      <FloatingActions />
+      <BookingModal />
+      <ExitIntentPrompt />
     </>
   );
 }

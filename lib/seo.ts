@@ -13,12 +13,12 @@ export function generateSEO({
   title,
   description = siteConfig.description,
   path = "",
-  image = "/images/og-image.jpg",
+  image = "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1200&q=80",
   noIndex = false,
 }: SEOProps = {}): Metadata {
   const pageTitle = title
     ? `${title} | ${siteConfig.name}`
-    : `${siteConfig.name} | Trusted Real Estate Agent in Ajmer`;
+    : `${siteConfig.name} | Premium Dental Clinic in Navi Mumbai`;
 
   const url = `${siteConfig.url}${path}`;
 
@@ -26,7 +26,9 @@ export function generateSEO({
     title: pageTitle,
     description,
     keywords: siteConfig.keywords,
-    robots: noIndex ? { index: false, follow: false } : { index: true, follow: true },
+    robots: noIndex
+      ? { index: false, follow: false }
+      : { index: true, follow: true },
     openGraph: {
       type: "website",
       locale: "en_IN",
@@ -48,54 +50,85 @@ export function generateSEO({
   };
 }
 
-export function localBusinessJsonLd() {
+export function dentistJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "RealEstateAgent"],
+    "@type": ["Dentist", "MedicalBusiness", "LocalBusiness"],
     name: contactInfo.businessName,
     description: siteConfig.description,
+    url: siteConfig.url,
     telephone: contactInfo.phone,
     email: contactInfo.email,
+    image: `${siteConfig.url}/images/og-image.jpg`,
     address: {
       "@type": "PostalAddress",
       streetAddress: contactInfo.address,
-      addressLocality: "Ajmer",
-      addressRegion: "Rajasthan",
+      addressLocality: contactInfo.city,
+      postalCode: contactInfo.pincode,
+      addressRegion: "Maharashtra",
       addressCountry: "IN",
     },
-    url: siteConfig.url,
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 19.0771,
+      longitude: 72.9987,
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ],
+        opens: "10:00",
+        closes: "20:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: "Sunday",
+        opens: "10:00",
+        closes: "14:00",
+      },
+    ],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: contactInfo.googleRating,
+      reviewCount: contactInfo.googleReviewCount,
+      bestRating: 5,
+    },
     priceRange: "₹₹",
-    openingHours: "Mo-Sa 10:00-19:00",
-    areaServed: "Ajmer",
+    areaServed: ["Navi Mumbai", "Vashi", "Sanpada", "Nerul", "Belapur"],
+    medicalSpecialty: "Dentistry",
   };
 }
 
-export function propertyJsonLd(property: {
-  title: string;
-  description: string;
-  price: number;
-  location: string;
-  images: string[];
-  slug: string;
+export function physicianJsonLd(doctor: {
+  name: string;
+  credentials: string;
+  photo: string;
+  specializations: string[];
 }) {
   return {
     "@context": "https://schema.org",
-    "@type": "RealEstateListing",
-    name: property.title,
-    description: property.description,
-    url: `${siteConfig.url}/properties/${property.slug}`,
-    offers: {
-      "@type": "Offer",
-      price: property.price,
-      priceCurrency: "INR",
+    "@type": "Physician",
+    name: doctor.name,
+    medicalSpecialty: doctor.specializations,
+    image: doctor.photo,
+    description: doctor.credentials,
+    worksFor: {
+      "@type": "Dentist",
+      name: contactInfo.businessName,
     },
     address: {
       "@type": "PostalAddress",
-      addressLocality: property.location,
-      addressRegion: "Rajasthan",
+      streetAddress: contactInfo.address,
+      addressLocality: contactInfo.city,
       addressCountry: "IN",
     },
-    image: property.images,
   };
 }
 
@@ -113,5 +146,23 @@ export function faqJsonLd(
         text: faq.answer,
       },
     })),
+  };
+}
+
+export function serviceJsonLd(service: {
+  title: string;
+  overview: string;
+  slug: string;
+  image: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "MedicalProcedure",
+    name: service.title,
+    description: service.overview,
+    url: `${siteConfig.url}/treatments/${service.slug}`,
+    image: service.image,
+    procedureType: "https://schema.org/NoninvasiveProcedure",
+    howPerformed: service.overview,
   };
 }

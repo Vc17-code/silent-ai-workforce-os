@@ -1,6 +1,6 @@
 import OwnerSidebar from "@/components/OwnerSidebar";
 import { getDashboardStats } from "@/lib/db";
-import { Building2, MessageSquare, Star, Eye } from "lucide-react";
+import { Calendar, Stethoscope, Images, MessageSquareQuote } from "lucide-react";
 import Link from "next/link";
 
 export default async function OwnerDashboardPage() {
@@ -8,41 +8,39 @@ export default async function OwnerDashboardPage() {
 
   const cards = [
     {
-      label: "Total Properties",
-      value: stats.totalProperties,
-      icon: Building2,
-      color: "bg-blue-100 text-primary",
-      href: "/owner/listings",
+      label: "New appointments",
+      value: stats.newAppointments,
+      icon: Calendar,
+      href: "/owner/appointments",
     },
     {
-      label: "Active Listings",
-      value: stats.activeListings,
-      icon: Eye,
-      color: "bg-emerald-100 text-secondary",
-      href: "/owner/listings",
+      label: "Treatments",
+      value: stats.totalTreatments,
+      icon: Stethoscope,
+      href: "/owner/treatments",
     },
     {
-      label: "Featured",
-      value: stats.featuredListings,
-      icon: Star,
-      color: "bg-amber-100 text-accent",
-      href: "/owner/listings",
+      label: "Gallery items",
+      value: stats.galleryItems,
+      icon: Images,
+      href: "/owner/gallery",
     },
     {
-      label: "Unread Inquiries",
-      value: stats.unreadInquiries,
-      icon: MessageSquare,
-      color: "bg-purple-100 text-purple-600",
-      href: "/owner/enquiries",
+      label: "Testimonials",
+      value: stats.testimonials,
+      icon: MessageSquareQuote,
+      href: "/owner/testimonials",
     },
   ];
 
   return (
     <>
       <OwnerSidebar />
-      <div className="flex-1 p-6 md:p-8">
-        <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
-        <p className="mt-1 text-slate-500">Welcome to Disha Properties management panel.</p>
+      <div className="flex-1 overflow-auto p-6 md:p-8">
+        <h1 className="font-display text-3xl text-ink">Dashboard</h1>
+        <p className="mt-1 text-muted">
+          Manage Smilecare content, appointments, and media — no coding required.
+        </p>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {cards.map((card) => {
@@ -51,15 +49,15 @@ export default async function OwnerDashboardPage() {
               <Link
                 key={card.label}
                 href={card.href}
-                className="card-hover rounded-2xl bg-white p-6 shadow-sm"
+                className="rounded-2xl border border-primary/10 bg-white p-6 transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(15,92,92,0.08)]"
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-slate-500">{card.label}</p>
-                    <p className="mt-1 text-3xl font-bold text-slate-900">{card.value}</p>
+                    <p className="text-sm text-muted">{card.label}</p>
+                    <p className="mt-1 font-display text-3xl text-ink">{card.value}</p>
                   </div>
-                  <div className={`rounded-xl p-3 ${card.color}`}>
-                    <Icon className="h-6 w-6" />
+                  <div className="rounded-2xl bg-mist p-3 text-primary">
+                    <Icon className="h-5 w-5" />
                   </div>
                 </div>
               </Link>
@@ -68,49 +66,30 @@ export default async function OwnerDashboardPage() {
         </div>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          <div className="rounded-2xl bg-white p-6 shadow-sm">
-            <h2 className="font-bold text-slate-900">Quick Actions</h2>
-            <div className="mt-4 space-y-2">
-              <Link
-                href="/owner/listings/new"
-                className="block rounded-lg bg-primary px-4 py-3 text-center text-sm font-semibold text-white hover:bg-primary-dark"
-              >
-                + Add New Property
+          <div className="rounded-2xl border border-primary/10 bg-white p-6">
+            <h2 className="font-display text-xl">Quick actions</h2>
+            <div className="mt-4 grid gap-2">
+              <Link href="/owner/appointments" className="btn-primary justify-center">
+                Review appointments ({stats.unreadAppointments} unread)
               </Link>
-              <Link
-                href="/owner/listings"
-                className="block rounded-lg border border-slate-200 px-4 py-3 text-center text-sm font-medium text-slate-700 hover:bg-slate-50"
-              >
-                Manage Listings
+              <Link href="/owner/media" className="btn-secondary justify-center">
+                Update video & 360° tour
               </Link>
-              <Link
-                href="/owner/enquiries"
-                className="block rounded-lg border border-slate-200 px-4 py-3 text-center text-sm font-medium text-slate-700 hover:bg-slate-50"
-              >
-                View Inquiries ({stats.totalInquiries})
+              <Link href="/owner/gallery" className="btn-secondary justify-center">
+                Manage smile gallery
               </Link>
             </div>
           </div>
-
-          <div className="rounded-2xl bg-white p-6 shadow-sm">
-            <h2 className="font-bold text-slate-900">Premium Features</h2>
-            <ul className="mt-4 space-y-3 text-sm text-slate-600">
-              <li className="flex items-center gap-2">
-                <span className="text-secondary">✓</span> Unlimited property listings
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-secondary">✓</span> Upload images & videos
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-secondary">✓</span> Feature properties on homepage
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-secondary">✓</span> Mark properties as sold/rented
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-secondary">✓</span> Manage customer inquiries
-              </li>
+          <div className="rounded-2xl border border-primary/10 bg-white p-6">
+            <h2 className="font-display text-xl">Future-ready modules</h2>
+            <ul className="mt-4 space-y-2 text-sm text-muted">
+              <li>Patient portal · Teleconsultation · Digital prescriptions</li>
+              <li>Online payments · AI chatbot · Smile simulator</li>
+              <li>Multi-branch · CRM · Analytics dashboard</li>
             </ul>
+            <p className="mt-4 text-xs text-muted">
+              Architecture supports these without redesign — activate when ready.
+            </p>
           </div>
         </div>
       </div>

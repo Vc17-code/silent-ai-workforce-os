@@ -1,0 +1,50 @@
+{
+  "introVideo": {
+    "url": "",
+    "thumbnail": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1600&q=80",
+    "title": "Welcome to Smilecare"
+  },
+  "virtualTour": {
+    "provider": "placeholder",
+    "embedUrl": "",
+    "thumbnail": "https://images.unsplash.com/photo-1629909615184-74f495363b67?w=1600&q=80",
+    "title": "360° Virtual Clinic Tour",
+    "hotspots": [
+      {
+        "id": "reception",
+        "label": "Reception",
+        "description": "Warm welcome desk and digital check-in"
+      },
+      {
+        "id": "waiting",
+        "label": "Waiting Area",
+        "description": "Calm seating with soft lighting"
+      },
+      {
+        "id": "consult",
+        "label": "Consultation Room",
+        "description": "Private treatment planning space"
+      },
+      {
+        "id": "treatment",
+        "label": "Treatment Room",
+        "description": "Modern chairs with digital imaging"
+      },
+      {
+        "id": "sterile",
+        "label": "Sterilization Zone",
+        "description": "Class-B autoclave protocols"
+      },
+      {
+        "id": "kids",
+        "label": "Kids Corner",
+        "description": "Friendly space for young patients"
+      }
+    ]
+  },
+  "heroBanner": {
+    "image": "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1920&q=80",
+    "headline": "Dentistry that feels calm, clear, and carefully done.",
+    "subheadline": "Modern dental care in Vashi for families who value comfort, transparency, and lasting smiles."
+  }
+}

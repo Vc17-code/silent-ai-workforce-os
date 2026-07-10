@@ -1,0 +1,48 @@
+{
+  "name": "Dr. Ananya Mehta",
+  "title": "Lead Dentist & Clinic Director",
+  "credentials": "BDS, MDS (Conservative Dentistry & Endodontics)",
+  "photo": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80",
+  "shortBio": "Dr. Ananya Mehta brings over a decade of precision dentistry to Smilecare, combining gentle chairside care with evidence-based treatments.",
+  "biography": "Dr. Ananya Mehta founded Smilecare Dentist with a simple belief: every patient deserves calm, transparent, and clinically excellent dental care. After completing her MDS in Conservative Dentistry & Endodontics, she trained in aesthetic smile design and minimally invasive techniques. Today she leads a modern clinic in Vashi serving families across Navi Mumbai — from first check-ups to complex restorative work — with a focus on comfort, clarity, and lasting results.",
+  "qualifications": [
+    "BDS — Maharashtra University of Health Sciences",
+    "MDS — Conservative Dentistry & Endodontics",
+    "Certification in Aesthetic Smile Design",
+    "Advanced Endodontic Microscopy Training"
+  ],
+  "experience": [
+    "12+ years in clinical dentistry",
+    "5,000+ successful procedures",
+    "Special focus on pain-free root canal therapy",
+    "Family and pediatric-friendly practice"
+  ],
+  "certifications": [
+    "Invisalign-aligned clear aligner training",
+    "Digital radiography & CBCT interpretation",
+    "Infection control & sterilization protocols (CDC-aligned)"
+  ],
+  "memberships": [
+    "Indian Dental Association (IDA)",
+    "Indian Endodontic Society",
+    "Indian Academy of Aesthetic Dentistry"
+  ],
+  "awards": [
+    "Navi Mumbai Healthcare Excellence — Dentistry (2024)",
+    "Patient Choice Award — Gentle Care (2023)",
+    "Clinical Excellence in Endodontics — Regional Forum (2022)"
+  ],
+  "specializations": [
+    "Root canal therapy",
+    "Smile makeovers",
+    "Dental implants",
+    "Cosmetic dentistry",
+    "Preventive family care"
+  ],
+  "philosophy": "Listen first. Explain clearly. Treat gently. Dentistry should feel collaborative — never rushed, never opaque. We plan every smile around your comfort, your timeline, and your long-term oral health.",
+  "gallery": [
+    "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80",
+    "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80",
+    "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80"
+  ]
+}

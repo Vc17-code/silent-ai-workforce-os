@@ -1,29 +1,33 @@
+import type { Metadata } from "next";
 import { PageHero } from "@/components/Hero";
-import PropertyGallery from "@/components/PropertyGallery";
-import { getProperties } from "@/lib/db";
+import GalleryClient from "@/components/GalleryClient";
+import AppointmentCTA from "@/components/AppointmentCTA";
 import { generateSEO } from "@/lib/seo";
+import { getGallery } from "@/lib/db";
 
-export const metadata = generateSEO({
-  title: "Gallery",
+export const metadata: Metadata = generateSEO({
+  title: "Smile Gallery",
   description:
-    "Browse our property gallery featuring residential, commercial, plots, and rental properties in Ajmer.",
+    "Browse before & after smiles, clinic spaces, and modern equipment at Smilecare Dentist, Navi Mumbai.",
   path: "/gallery",
 });
 
 export default async function GalleryPage() {
-  const properties = await getProperties();
+  const items = await getGallery();
 
   return (
     <>
       <PageHero
-        title="Property Gallery"
-        subtitle="Explore our collection of residential, commercial, and plot properties across Ajmer."
+        brand
+        title="Smile Gallery"
+        subtitle="Real results, calm spaces, and the clinical environment patients experience at Smilecare."
       />
-      <section className="section-padding bg-background">
+      <section className="section-padding">
         <div className="container-custom">
-          <PropertyGallery properties={properties} />
+          <GalleryClient items={items} />
         </div>
       </section>
+      <AppointmentCTA />
     </>
   );
 }

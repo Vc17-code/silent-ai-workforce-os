@@ -1,0 +1,321 @@
+[
+  {
+    "id": "bbb6229e-fd0e-4480-b22c-860aed25c6b8",
+    "slug": "dental-checkup-cleaning",
+    "title": "Dental Check-up & Cleaning",
+    "shortDescription": "Comprehensive oral exam with gentle professional cleaning.",
+    "overview": "A thorough clinical examination paired with professional scaling and polishing to keep gums healthy and catch concerns early.",
+    "benefits": [
+      "Early detection of cavities and gum issues",
+      "Fresher breath and smoother teeth",
+      "Personalized home-care guidance"
+    ],
+    "procedure": [
+      "Medical & dental history review",
+      "Full mouth examination and digital imaging if needed",
+      "Scaling, polishing, and oral hygiene coaching"
+    ],
+    "recovery": "Resume normal activities immediately. Mild sensitivity may last a day.",
+    "duration": "30–45 minutes",
+    "suitableFor": [
+      "Adults and children",
+      "Routine preventive care",
+      "New patient visits"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I get a cleaning?",
+        "answer": "Most patients benefit from a professional cleaning every 6 months. We’ll tailor the interval to your gum health."
+      }
+    ],
+    "relatedSlugs": [
+      "teeth-whitening",
+      "root-canal-treatment"
+    ],
+    "image": "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80",
+    "icon": "Sparkles",
+    "featured": true,
+    "order": 1,
+    "published": true,
+    "updatedAt": "2026-07-10T18:35:50.154Z"
+  },
+  {
+    "id": "5a2beb73-243d-4f58-b702-582e122dae40",
+    "slug": "root-canal-treatment",
+    "title": "Root Canal Treatment",
+    "shortDescription": "Pain-focused endodontic care to save your natural tooth.",
+    "overview": "Precision root canal therapy using modern techniques to remove infection, relieve pain, and preserve your natural tooth.",
+    "benefits": [
+      "Relieves toothache and infection",
+      "Saves the natural tooth",
+      "Comfort-led, step-by-step care"
+    ],
+    "procedure": [
+      "Diagnosis with digital imaging",
+      "Local anesthesia and isolation",
+      "Cleaning, shaping, and sealing of canals",
+      "Crown planning when required"
+    ],
+    "recovery": "Mild tenderness for 1–3 days. Soft foods recommended initially.",
+    "duration": "60–90 minutes (may require 1–2 visits)",
+    "suitableFor": [
+      "Deep decay",
+      "Irreversible pulpitis",
+      "Dental trauma cases"
+    ],
+    "faqs": [
+      {
+        "question": "Is a root canal painful?",
+        "answer": "With modern anesthesia and gentle technique, most patients report relief rather than pain during the procedure."
+      }
+    ],
+    "relatedSlugs": [
+      "dental-crowns",
+      "dental-checkup-cleaning"
+    ],
+    "image": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80",
+    "icon": "HeartPulse",
+    "featured": true,
+    "order": 2,
+    "published": true,
+    "updatedAt": "2026-07-10T18:35:50.154Z"
+  },
+  {
+    "id": "eb608a70-5356-4f17-b30e-b7cf307028b0",
+    "slug": "teeth-whitening",
+    "title": "Teeth Whitening",
+    "shortDescription": "Clinically supervised whitening for a brighter, natural smile.",
+    "overview": "Professional whitening tailored to your enamel health — delivering noticeable brightness without aggressive over-the-counter guesswork.",
+    "benefits": [
+      "Even, natural-looking results",
+      "Supervised for enamel safety",
+      "Quick in-clinic transformation"
+    ],
+    "procedure": [
+      "Shade assessment and gum protection",
+      "Professional whitening application",
+      "Aftercare guidance for lasting results"
+    ],
+    "recovery": "Temporary sensitivity possible for 24–48 hours. Avoid staining foods briefly.",
+    "duration": "45–60 minutes",
+    "suitableFor": [
+      "Adults with healthy enamel",
+      "Stains from coffee, tea, or aging"
+    ],
+    "faqs": [
+      {
+        "question": "How long do results last?",
+        "answer": "Results typically last several months to a year depending on diet and maintenance. Touch-ups keep your shade bright."
+      }
+    ],
+    "relatedSlugs": [
+      "smile-makeover",
+      "dental-checkup-cleaning"
+    ],
+    "image": "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800&q=80",
+    "icon": "Sun",
+    "featured": true,
+    "order": 3,
+    "published": true,
+    "updatedAt": "2026-07-10T18:35:50.154Z"
+  },
+  {
+    "id": "9017e4fc-4082-4081-97f5-2563b720629a",
+    "slug": "dental-implants",
+    "title": "Dental Implants",
+    "shortDescription": "Stable, natural-feeling tooth replacement for missing teeth.",
+    "overview": "Titanium implant solutions planned with digital diagnostics for strength, aesthetics, and long-term oral health.",
+    "benefits": [
+      "Looks and feels like a natural tooth",
+      "Preserves jawbone health",
+      "Long-lasting restorative option"
+    ],
+    "procedure": [
+      "Consultation and 3D planning",
+      "Implant placement under local anesthesia",
+      "Healing period and crown restoration"
+    ],
+    "recovery": "Soft diet for a few days. Full integration typically over several weeks.",
+    "duration": "Planning + surgical visit; crown after healing",
+    "suitableFor": [
+      "Single missing teeth",
+      "Multiple gaps",
+      "Denture stabilization"
+    ],
+    "faqs": [
+      {
+        "question": "Am I a candidate for implants?",
+        "answer": "Most healthy adults with adequate bone are candidates. We’ll assess gum health, bone volume, and medical history first."
+      }
+    ],
+    "relatedSlugs": [
+      "dental-crowns",
+      "smile-makeover"
+    ],
+    "image": "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=800&q=80",
+    "icon": "Gem",
+    "featured": true,
+    "order": 4,
+    "published": true,
+    "updatedAt": "2026-07-10T18:35:50.154Z"
+  },
+  {
+    "id": "211a9c23-3576-49ce-9588-afa9a550a5cd",
+    "slug": "dental-crowns",
+    "title": "Dental Crowns",
+    "shortDescription": "Custom ceramic crowns that restore strength and beauty.",
+    "overview": "Tooth-colored crowns crafted to protect weakened teeth while blending seamlessly with your smile.",
+    "benefits": [
+      "Restores chewing strength",
+      "Natural aesthetics",
+      "Protects cracked or root-treated teeth"
+    ],
+    "procedure": [
+      "Tooth preparation and digital impressions",
+      "Temporary crown if needed",
+      "Final ceramic crown bonding"
+    ],
+    "recovery": "Slight adjustment period for bite comfort. Normal eating within a day for most patients.",
+    "duration": "2 visits typically",
+    "suitableFor": [
+      "After root canal",
+      "Fractured teeth",
+      "Large restorations"
+    ],
+    "faqs": [
+      {
+        "question": "How long do crowns last?",
+        "answer": "With good oral hygiene, quality ceramic crowns often last 10–15 years or longer."
+      }
+    ],
+    "relatedSlugs": [
+      "root-canal-treatment",
+      "dental-implants"
+    ],
+    "image": "https://images.unsplash.com/photo-1609113316024-c83087524487?w=800&q=80",
+    "icon": "Shield",
+    "featured": true,
+    "order": 5,
+    "published": true,
+    "updatedAt": "2026-07-10T18:35:50.154Z"
+  },
+  {
+    "id": "af2ea7e0-1727-4396-8cf2-5ba10c5e97aa",
+    "slug": "smile-makeover",
+    "title": "Smile Makeover",
+    "shortDescription": "Personalized aesthetic planning for a confident, natural smile.",
+    "overview": "A curated combination of whitening, bonding, aligners, or veneers — designed around your facial features and goals.",
+    "benefits": [
+      "Holistic aesthetic planning",
+      "Natural, age-appropriate results",
+      "Clear timeline and staged options"
+    ],
+    "procedure": [
+      "Smile analysis and digital preview discussion",
+      "Phased treatment plan",
+      "Refinement and maintenance guidance"
+    ],
+    "recovery": "Depends on selected treatments; most aesthetic steps have minimal downtime.",
+    "duration": "Custom — from a single visit to a staged plan",
+    "suitableFor": [
+      "Cosmetic concerns",
+      "Worn or uneven smiles",
+      "Confidence-focused makeovers"
+    ],
+    "faqs": [
+      {
+        "question": "Will my smile look artificial?",
+        "answer": "No. We design for harmony with your face — brightness, shape, and proportion that look naturally yours."
+      }
+    ],
+    "relatedSlugs": [
+      "teeth-whitening",
+      "dental-implants"
+    ],
+    "image": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80",
+    "icon": "Smile",
+    "featured": true,
+    "order": 6,
+    "published": true,
+    "updatedAt": "2026-07-10T18:35:50.154Z"
+  },
+  {
+    "id": "dd347627-257a-4e69-9fdf-e80aa607e0c7",
+    "slug": "braces-aligners",
+    "title": "Braces & Clear Aligners",
+    "shortDescription": "Straighten teeth discreetly with guided orthodontic care.",
+    "overview": "Metal braces and clear aligner options planned for comfort, predictability, and a confident finish.",
+    "benefits": [
+      "Improved alignment and bite",
+      "Discreet clear aligner options",
+      "Monitored progress at every stage"
+    ],
+    "procedure": [
+      "Orthodontic assessment and records",
+      "Customized appliance or aligner plan",
+      "Periodic reviews and retention"
+    ],
+    "recovery": "Mild pressure for a few days after adjustments or new trays.",
+    "duration": "Typically 6–18 months depending on case",
+    "suitableFor": [
+      "Crowding",
+      "Spacing",
+      "Bite correction"
+    ],
+    "faqs": [
+      {
+        "question": "Are clear aligners right for me?",
+        "answer": "Many mild-to-moderate cases are excellent aligner candidates. We’ll confirm after a clinical assessment."
+      }
+    ],
+    "relatedSlugs": [
+      "smile-makeover",
+      "dental-checkup-cleaning"
+    ],
+    "image": "https://images.unsplash.com/photo-1598255557997-1ad293f595ab?w=800&q=80",
+    "icon": "AlignLeft",
+    "featured": false,
+    "order": 7,
+    "published": true,
+    "updatedAt": "2026-07-10T18:35:50.154Z"
+  },
+  {
+    "id": "e83fe134-8383-427b-bf34-5b5ef2ff5477",
+    "slug": "pediatric-dentistry",
+    "title": "Pediatric Dentistry",
+    "shortDescription": "Gentle dental care that helps children feel safe and confident.",
+    "overview": "Age-appropriate check-ups, preventive care, and kind chairside manner for growing smiles.",
+    "benefits": [
+      "Builds positive dental habits early",
+      "Cavity prevention and guidance",
+      "Calm environment for kids"
+    ],
+    "procedure": [
+      "Friendly introduction to the clinic",
+      "Gentle exam and cleaning",
+      "Parent guidance on diet and brushing"
+    ],
+    "recovery": "None — children return to normal activities immediately.",
+    "duration": "20–40 minutes",
+    "suitableFor": [
+      "Children and teens",
+      "First dental visits",
+      "Preventive care"
+    ],
+    "faqs": [
+      {
+        "question": "When should my child first visit?",
+        "answer": "Ideally by age one or within six months of the first tooth. Early visits make future care easier."
+      }
+    ],
+    "relatedSlugs": [
+      "dental-checkup-cleaning"
+    ],
+    "image": "https://images.unsplash.com/photo-1588776813658-f255ee567984?w=800&q=80",
+    "icon": "Baby",
+    "featured": false,
+    "order": 8,
+    "published": true,
+    "updatedAt": "2026-07-10T18:35:50.154Z"
+  }
+]

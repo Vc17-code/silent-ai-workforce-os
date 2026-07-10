@@ -1,32 +1,46 @@
 import Hero from "@/components/Hero";
-import AboutSection from "@/components/AboutSection";
-import FeaturedProperties from "@/components/FeaturedProperties";
-import PropertyCategories from "@/components/PropertyCategories";
-import ServicesSection from "@/components/ServicesSection";
-import WhyChooseUs from "@/components/WhyChooseUs";
-import ProcessTimeline from "@/components/ProcessTimeline";
+import IntroSection, {
+  DoctorHighlight,
+  WhyChooseUs,
+} from "@/components/IntroSection";
+import FeaturedTreatments from "@/components/FeaturedTreatments";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import FAQSection from "@/components/FAQSection";
-import ContactSection from "@/components/ContactSection";
-import CTA from "@/components/CTA";
-import { getFeaturedProperties } from "@/lib/db";
+import {
+  GalleryPreview,
+  IntroVideoSection,
+  VirtualTourPreview,
+} from "@/components/MediaSections";
+import AppointmentCTA, { LocationSection } from "@/components/AppointmentCTA";
+import {
+  getFeaturedTreatments,
+  getGallery,
+  getMediaAssets,
+  getSiteContent,
+  getTestimonials,
+} from "@/lib/db";
 
 export default async function HomePage() {
-  const featured = await getFeaturedProperties();
+  const [treatments, testimonials, gallery, media, content] = await Promise.all([
+    getFeaturedTreatments(),
+    getTestimonials(),
+    getGallery(),
+    getMediaAssets(),
+    getSiteContent(),
+  ]);
 
   return (
     <>
-      <Hero />
-      <AboutSection />
-      <FeaturedProperties properties={featured} />
-      <PropertyCategories />
-      <ServicesSection />
-      <WhyChooseUs />
-      <ProcessTimeline />
-      <TestimonialsSection />
-      <FAQSection />
-      <ContactSection />
-      <CTA />
+      <Hero media={media} />
+      <IntroSection content={content} />
+      <DoctorHighlight />
+      <WhyChooseUs items={content.whyChooseUs} />
+      <FeaturedTreatments treatments={treatments} />
+      <TestimonialsSection testimonials={testimonials} />
+      <GalleryPreview items={gallery} />
+      <VirtualTourPreview media={media} />
+      <IntroVideoSection media={media} />
+      <AppointmentCTA />
+      <LocationSection />
     </>
   );
 }
