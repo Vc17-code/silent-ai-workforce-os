@@ -59,7 +59,7 @@ export function dentistJsonLd() {
     url: siteConfig.url,
     telephone: contactInfo.phone,
     email: contactInfo.email,
-    image: `${siteConfig.url}/images/og-image.jpg`,
+    image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1200&q=80",
     address: {
       "@type": "PostalAddress",
       streetAddress: contactInfo.address,
